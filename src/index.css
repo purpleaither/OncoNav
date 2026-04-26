@@ -1,31 +1,67 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100&display=swap');
 
-@theme {
-  --color-primary: #4c1d95; /* Deep Purple (violet-900) */
-  --color-primary-dark: #3b0764; /* fuchsia-900 */
-  --color-primary-light: #64748b; /* Slate Gray */
-  --color-secondary: #0d9488; /* Professional Teal */
-  --color-bg-main: #f1f5f9; /* Slate 50 background */
+:root {
+  --color-primary: #4c1d95;
+  --color-primary-dark: #3b0764;
+  --color-primary-light: #a78bfa;
+  --color-secondary: #0d9488;
+  --color-bg-main: #f1f5f9;
   --color-surface: #ffffff;
-  --color-text-main: #0f172a; /* Slate 900 */
-  --color-text-muted: #475569; /* Slate 600 */
+  --color-text-main: #0f172a;
+  --color-text-muted: #475569;
+  --color-border: #e2e8f0;
 }
+
+.dark-mode {
+  --color-bg-main: #000000;
+  --color-surface: #0a0a0a;
+  --color-text-main: #ffffff;
+  --color-text-muted: #e2e8f0;
+  --color-border: #334155;
+  --color-primary: #d8b4fe; /* Lilac Neon */
+  --color-primary-dark: #f5d0fe; 
+  --color-primary-light: #ffffff;
+}
+
+.dark-mode .text-neon-purple { color: #c084fc !important; text-shadow: 0 0 8px rgba(192, 132, 252, 0.4); }
+.dark-mode .text-neon-pink { color: #f472b6 !important; text-shadow: 0 0 8px rgba(244, 114, 182, 0.4); }
+.dark-mode .text-neon-emerald { color: #34d399 !important; text-shadow: 0 0 8px rgba(52, 211, 153, 0.4); }
+.dark-mode .text-neon-blue { color: #60a5fa !important; text-shadow: 0 0 8px rgba(96, 165, 250, 0.4); }
+.dark-mode .text-neon-amber { color: #fbbf24 !important; text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+.dark-mode .text-neon-red { color: #fb7185 !important; text-shadow: 0 0 8px rgba(251, 113, 133, 0.4); }
 
 body {
   background-color: var(--color-bg-main);
   color: var(--color-text-main);
+  transition: background-color 0.3s, color 0.3s;
   font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+.font-tulpen    { font-family: 'Tulpen One', cursive; }
+.font-bungee    { font-family: 'Bungee Hairline', cursive; }
+.font-alumni    { font-family: 'Alumni Sans Pinstripe', sans-serif; }
+.font-thin-title { font-family: 'Raleway', sans-serif; font-weight: 100; letter-spacing: 0.18em; }
+
 /* Glassmorphism utilities - Toned down for enterprise */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--color-surface);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(226, 232, 240, 1); /* Tailwind gray-200 */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .glass-panel {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(51, 65, 85, 0.5);
 }
 
 .premium-shadow {
@@ -44,12 +80,12 @@ body {
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1; /* Tailwind slate-300 */
+::webkit-scrollbar-thumb {
+  background: var(--color-border);
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; /* Tailwind slate-400 */
+::webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
 
 /* Premium Loading Animation */
@@ -83,9 +119,48 @@ body {
    ============================================ */
 
 .dark-mode {
-  background-color: #0f172a !important;
-  color: #e2e8f0 !important;
+  background-color: var(--color-bg-main) !important;
 }
+
+.dark-mode .bg-white { background-color: var(--color-surface) !important; }
+.dark-mode .text-gray-900 { color: var(--color-text-main) !important; }
+.dark-mode .text-gray-600 { color: var(--color-text-muted) !important; }
+.dark-mode .text-gray-500 { color: var(--color-text-muted) !important; }
+.dark-mode .border-gray-200 { border-color: var(--color-border) !important; }
+.dark-mode .bg-gray-50 { background-color: #0f172a !important; }
+.dark-mode .bg-slate-50 { background-color: #020617 !important; }
+.dark-mode .text-slate-900 { color: var(--color-text-main) !important; }
+.dark-mode .bg-purple-50 { background-color: rgba(139, 92, 246, 0.1) !important; }
+.dark-mode .border-purple-100 { border-color: rgba(139, 92, 246, 0.2) !important; }
+.dark-mode .text-[#4c1d95] { color: var(--color-primary) !important; }
+.dark-mode .text-[#0f172a] { color: var(--color-text-main) !important; }
+.dark-mode .bg-[#f8fafc] { background-color: var(--color-surface) !important; }
+.dark-mode .bg-[#f1f5f9] { background-color: var(--color-bg-main) !important; }
+
+.dark-mode .text-blue-900 { color: #dbeafe !important; }
+.dark-mode .text-purple-900 { color: #f5f3ff !important; }
+.dark-mode .text-pink-900 { color: #fce7f3 !important; }
+.dark-mode .text-emerald-900 { color: #d1fae5 !important; }
+.dark-mode .text-gray-400 { color: #f8fafc !important; }
+.dark-mode .text-gray-800 { color: #ffffff !important; }
+.dark-mode .text-gray-700 { color: #ffffff !important; }
+
+/* Force contrast for all bold text and borders in dark mode, unless explicitly forced to black */
+.dark-mode .font-bold:not(.force-black), 
+.dark-mode .font-semibold:not(.force-black),
+.dark-mode b:not(.force-black), 
+.dark-mode strong:not(.force-black) { 
+  color: #ffffff !important; 
+}
+
+.force-black {
+  color: #000000 !important;
+}
+
+.dark-mode * {
+  border-color: var(--color-border) !important;
+}
+
 
 /* White/light surfaces → dark surfaces */
 .dark-mode *[class*="bg-white"],
@@ -132,19 +207,46 @@ body {
 .dark-mode *[class*="text-[#0f172a]"],
 .dark-mode *[class*="text-[#1e293b]"],
 .dark-mode *[class*="text-[#334155]"] {
-  color: #e2e8f0 !important;
+  color: #ffffff !important;
 }
 
-.dark-mode *[class*="text-[#475569]"],
-.dark-mode *[class*="text-[#64748b]"],
-.dark-mode *[class*="text-gray-500"],
-.dark-mode *[class*="text-gray-600"] {
-  color: #94a3b8 !important;
+/* Vibrant Icon Colors in Dark Mode - Sharp Edition */
+.dark-mode .text-[#4c1d95], 
+.dark-mode .text-blue-900, 
+.dark-mode .text-[#5b21b6],
+.dark-mode .text-purple-900 { 
+  color: #e9d5ff !important; /* Light Lilac */
+  text-shadow: none; 
+  filter: brightness(1.0);
+} 
+
+.dark-mode .text-[#db2777], .dark-mode .text-pink-900 { 
+  color: #fb7185 !important; 
+  text-shadow: none; 
+  filter: brightness(1.0);
+}
+
+.dark-mode .text-[#0d9488], .dark-mode .text-emerald-900 { 
+  color: #6ee7b7 !important; 
+  text-shadow: none; 
+  filter: brightness(1.0);
+}
+
+/* Specific Phrase Contrast */
+.dark-mode .text-[#64748b], .dark-mode .text-[#475569] { color: #ffffff !important; font-weight: 500; }
+.dark-mode h2[style*="Julius Sans One"] { color: #ffffff !important; font-weight: 700; letter-spacing: 0.4em; }
+
+.dark-mode .text-hero-glow {
+  color: #e9d5ff !important; /* Clean Light Lilac */
+  text-shadow: none;
+  filter: brightness(1.0);
 }
 
 /* Borders */
 .dark-mode *[class*="border-gray-200"],
-.dark-mode *[class*="border-gray-100"] {
+.dark-mode *[class*="border-gray-100"],
+.dark-mode *[class*="border-purple-100"],
+.dark-mode *[class*="border-pink-100"] {
   border-color: #334155 !important;
 }
 
