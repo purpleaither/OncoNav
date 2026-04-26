@@ -75,3 +75,164 @@ body {
   border: 3px solid currentColor;
   animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
+
+/* ============================================
+   DARK MODE — Global Override
+   Applied via .dark-mode on root element
+   Inverts light→dark, dark→light
+   ============================================ */
+
+.dark-mode {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+/* White/light surfaces → dark surfaces */
+.dark-mode *[class*="bg-white"],
+.dark-mode *[class*="bg-gray-50"],
+.dark-mode *[class*="bg-gray-100"],
+.dark-mode *[class*="bg-[#f8fafc]"],
+.dark-mode *[class*="bg-[#f1f5f9]"] {
+  background-color: #1e293b !important;
+}
+
+.dark-mode *[class*="bg-[#f0fdf4]"],
+.dark-mode *[class*="bg-green-50"],
+.dark-mode *[class*="bg-emerald-50"] {
+  background-color: #052e16 !important;
+}
+
+.dark-mode *[class*="bg-purple-50"],
+.dark-mode *[class*="bg-indigo-50"],
+.dark-mode *[class*="bg-[#4c1d95]\/5"] {
+  background-color: #2e1065 !important;
+}
+
+.dark-mode *[class*="bg-pink-50"],
+.dark-mode *[class*="bg-rose-50"] {
+  background-color: #4a0019 !important;
+}
+
+.dark-mode *[class*="bg-amber-50"],
+.dark-mode *[class*="bg-yellow-50"] {
+  background-color: #451a03 !important;
+}
+
+.dark-mode *[class*="bg-teal-50"],
+.dark-mode *[class*="bg-cyan-50"] {
+  background-color: #042f2e !important;
+}
+
+.dark-mode *[class*="bg-blue-50"],
+.dark-mode *[class*="bg-sky-50"] {
+  background-color: #172554 !important;
+}
+
+/* Dark text → light text */
+.dark-mode *[class*="text-[#0f172a]"],
+.dark-mode *[class*="text-[#1e293b]"],
+.dark-mode *[class*="text-[#334155]"] {
+  color: #e2e8f0 !important;
+}
+
+.dark-mode *[class*="text-[#475569]"],
+.dark-mode *[class*="text-[#64748b]"],
+.dark-mode *[class*="text-gray-500"],
+.dark-mode *[class*="text-gray-600"] {
+  color: #94a3b8 !important;
+}
+
+/* Borders */
+.dark-mode *[class*="border-gray-200"],
+.dark-mode *[class*="border-gray-100"] {
+  border-color: #334155 !important;
+}
+
+/* Rounded cards / panels */
+.dark-mode header,
+.dark-mode *[class*="rounded-xl"],
+.dark-mode *[class*="rounded-2xl"],
+.dark-mode *[class*="rounded-3xl"] {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+/* Inputs */
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Scrollbar */
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: #475569 !important;
+}
+
+/* ============================================
+   HIGH CONTRAST MODE — Global Override
+   Applied via .high-contrast on root element
+   Everything becomes: bg=black, text/icon=yellow
+   ============================================ */
+
+.high-contrast,
+.high-contrast * {
+  background-color: #000 !important;
+  color: #facc15 !important;
+  border-color: #facc15 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Keep SVG icons yellow */
+.high-contrast svg,
+.high-contrast svg * {
+  color: #facc15 !important;
+  stroke: #facc15 !important;
+  fill: none !important;
+}
+
+/* Inputs and buttons */
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select {
+  background-color: #000 !important;
+  color: #facc15 !important;
+  border: 2px solid #facc15 !important;
+}
+
+.high-contrast input::placeholder,
+.high-contrast textarea::placeholder {
+  color: #a16207 !important;
+}
+
+/* Active / selected button gets yellow bg + black text */
+.high-contrast button[data-active="true"],
+.high-contrast [aria-selected="true"] {
+  background-color: #facc15 !important;
+  color: #000 !important;
+}
+
+/* Links */
+.high-contrast a {
+  color: #facc15 !important;
+  text-decoration: underline !important;
+}
+
+/* Focus outline */
+.high-contrast *:focus-visible {
+  outline: 3px solid #facc15 !important;
+  outline-offset: 2px !important;
+}
+
+/* Scrollbar */
+.high-contrast ::-webkit-scrollbar-thumb {
+  background: #facc15 !important;
+}
