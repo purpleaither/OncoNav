@@ -261,6 +261,16 @@ export default function PatientView({ highContrast }) {
               Clinical Records
             </button>
             <button 
+              onClick={() => setActiveTab('care')}
+              className={`flex-1 py-2 px-4 rounded-md text-xs font-semibold transition-all ${
+                activeTab === 'care' 
+                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : 'bg-[#f1f5f9] text-[#0f172a] shadow-sm border border-gray-200') 
+                  : (highContrast ? 'text-white hover:text-yellow-300' : 'text-[#64748b] hover:text-[#0f172a]')
+              }`}
+            >
+              Care & Support
+            </button>
+            <button 
               onClick={() => setActiveTab('ai')}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-semibold transition-all flex items-center justify-center gap-2 ${
                 activeTab === 'ai' 
@@ -376,6 +386,59 @@ export default function PatientView({ highContrast }) {
                   <p className={`text-[11px] p-3 rounded mt-2 shadow-sm leading-relaxed ${highContrast ? 'bg-black border border-yellow-400 text-white' : 'bg-white border border-gray-200 text-[#334155]'}`}>
                     Findings: Dense breast tissue. Small nodule detected in the upper outer quadrant of the right breast. Biopsy recommended.
                   </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'care' && (
+            <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
+              <h3 className={`font-bold text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Daily Care & Contacts</h3>
+              <p className={`text-[11px] mb-6 ${hcText}`}>Manage your medications and emergency network</p>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className={`font-semibold text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>
+                    <Activity className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> Medication Tracking
+                  </h4>
+                  <div className={`space-y-3`}>
+                    <div className={`flex items-center gap-4 p-3 rounded-lg ${hcMuted}`}>
+                      <div className={`w-8 h-8 rounded-md flex items-center justify-center ${highContrast ? 'bg-black border border-yellow-400 text-yellow-400' : 'bg-white border border-gray-200 text-[#4c1d95]'}`}>
+                        <Check className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className={`font-semibold text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Tamoxifen 20mg</h4>
+                        <p className={`text-[10px] ${hcText}`}>1 pill daily • Taken at 08:00 AM</p>
+                      </div>
+                    </div>
+                    <div className={`flex items-center gap-4 p-3 rounded-lg border border-dashed ${highContrast ? 'border-yellow-400/50 bg-black' : 'border-gray-300 bg-white'}`}>
+                      <div className={`w-8 h-8 rounded-md flex items-center justify-center ${highContrast ? 'bg-gray-900 border border-yellow-400/50 text-yellow-400/50' : 'bg-gray-50 border border-gray-200 text-gray-400'}`}>
+                        <Clock className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className={`font-semibold text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Vitamin D3 2000 UI</h4>
+                        <p className={`text-[10px] ${hcText}`}>1 pill daily • Scheduled for 20:00</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className={`font-semibold text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>
+                    <ShieldCheck className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> Emergency Contacts
+                  </h4>
+                  <div className={`grid grid-cols-1 md:grid-cols-2 gap-3`}>
+                    <div className={`p-3 rounded-lg ${hcMuted}`}>
+                      <h4 className={`font-semibold text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Dr. Sarah Jenkins</h4>
+                      <p className={`text-[10px] ${hcText}`}>Primary Oncologist</p>
+                      <p className={`text-[11px] font-mono mt-1 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`}>+55 11 9999-8888</p>
+                    </div>
+                    <div className={`p-3 rounded-lg ${hcMuted}`}>
+                      <h4 className={`font-semibold text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Central Hospital</h4>
+                      <p className={`text-[10px] ${hcText}`}>Emergency Room 24/7</p>
+                      <p className={`text-[11px] font-mono mt-1 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`}>+55 11 3333-0000</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
