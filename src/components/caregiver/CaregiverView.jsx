@@ -77,18 +77,18 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
     ? 'bg-black text-white border-2 border-yellow-400' 
     : darkMode 
       ? 'bg-gray-900 border border-gray-800 text-gray-100' 
-      : 'bg-white border border-gray-200 text-[#0f172a]';
+      : 'bg-white border border-gray-200 text-[#2d0a4d]';
 
   const hcText = highContrast 
     ? 'text-yellow-300' 
     : darkMode 
-      ? 'text-gray-400' 
+      ? 'text-gray-100' 
       : 'text-[#64748b]';
 
   const hcMuted = highContrast 
     ? 'bg-gray-800 border-2 border-yellow-400 text-white' 
     : darkMode 
-      ? 'bg-gray-800 border border-gray-700 text-gray-200' 
+      ? 'bg-gray-800 border border-gray-700 text-white' 
       : 'bg-[#f8fafc] border border-gray-200 text-[#334155]';
   
   const themeColor = highContrast ? 'yellow-400' : '[#db2777]';
@@ -107,7 +107,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
           <p className={`mb-8 text-xs ${hcText}`}>Support the patient's care pathway and monitor legal deadlines.</p>
           <button
             onClick={() => setIsAuthenticated(true)}
-            className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] hover:bg-[#be185d] text-white shadow-md shadow-pink-100'}`}
+            className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] hover:bg-[#be185d] text-white'}`}
           >
             <ShieldCheck className="w-4 h-4" />
             Authenticate as Caregiver
@@ -169,7 +169,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
         {/* Left Column: Progress & Agenda */}
         <div className="xl:col-span-4 space-y-6">
           <div className={`rounded-xl p-6 shadow-sm flex flex-col items-center justify-center ${hcBg}`}>
-            <h3 className={`font-medium text-sm mb-6 text-center leading-tight ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Patient Timeline Monitor<br/><span className={`text-[10px] uppercase tracking-widest ${hcText}`}>Flow Data (60-Day Limit)</span></h3>
+            <h3 className={`font-medium text-sm mb-6 text-center leading-tight ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Patient Timeline Monitor<br/><span className={`text-[10px] uppercase tracking-widest ${hcText}`}>Flow Data (60-Day Limit)</span></h3>
             <div className="relative w-32 h-32 mb-5">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="40" fill="none" stroke={highContrast ? 'rgba(255,255,255,0.1)' : '#f1f5f9'} strokeWidth="8" />
@@ -189,7 +189,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
           </div>
 
           <div className={`rounded-xl p-5 shadow-sm ${hcBg}`}>
-            <h3 className={`font-medium text-sm flex items-center gap-2 mb-4 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>
+            <h3 className={`font-medium text-sm flex items-center gap-2 mb-4 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>
               <CalendarDays className={`w-4 h-4 ${themeText}`} /> Patient Agenda
             </h3>
             <div className={`grid grid-cols-7 gap-1 text-center mb-2 text-[10px] font-medium ${hcText}`}>
@@ -226,7 +226,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                 className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${
                   activeTab === tab.id 
                     ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#fdf2f8] text-[#db2777] shadow-sm border border-pink-200')) 
-                    : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#0f172a] dark:text-gray-300')
+                    : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
                 }`}
               >
                 {tab.label}
@@ -245,7 +245,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
           {activeTab === 'pathway' && (
             <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
-              <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Patient Flow Organization</h3>
+              <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Patient Flow Organization</h3>
               <p className={`text-[11px] mb-6 ${hcText}`}>Mandatory procedures sequence for the patient</p>
               
               <div className="space-y-3">
@@ -254,7 +254,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     <Check className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
-                    <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Bilateral Mammography</h4>
+                    <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Bilateral Mammography</h4>
                     <p className={`text-[10px] ${hcText}`}>Completed on Mar 10</p>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     <span className={`text-[9px] font-medium uppercase flex items-center gap-1 mb-1 ${darkMode ? 'text-white' : themeText}`}>
                       <div className={`w-1.5 h-1.5 rounded-full ${darkMode ? 'bg-white' : themeBg}`}></div> Action Required: Escort Patient
                     </span>
-                    <h4 className={`font-medium text-xs ${highContrast || darkMode ? 'text-white' : 'text-[#0f172a]'}`}>Core Needle Biopsy</h4>
+                    <h4 className={`font-medium text-xs ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>Core Needle Biopsy</h4>
                     <p className={`text-[10px] mt-0.5 ${hcText}`}>Tomorrow @ 14:00 • Central Hospital</p>
                   </div>
                   <ChevronRight className={`w-4 h-4 ${hcText}`} />
@@ -288,12 +288,12 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
           {activeTab === 'care' && (
             <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
-              <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Daily Care & Contacts</h3>
+              <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Daily Care & Contacts</h3>
               <p className={`text-[11px] mb-6 ${hcText}`}>Manage the patient's medications and emergency network</p>
               
               <div className="space-y-6">
                 <div>
-                  <h4 className={`font-medium text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>
+                  <h4 className={`font-medium text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>
                     <Activity className={`w-4 h-4 ${themeText}`} /> Medication Tracking
                   </h4>
                   <div className={`space-y-4`}>
@@ -317,7 +317,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                             <span className="text-[7px] font-medium leading-none">{med.time.split(' ')[0]}</span>
                           </div>
                           <div className="flex-1">
-                            <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>{med.name}</h4>
+                            <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>{med.name}</h4>
                             <p className={`text-[10px] ${hcText}`}>{med.desc} • Scheduled for {med.time}</p>
                           </div>
                           {medsTaken[med.time] && <CheckCircle2 className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-emerald-400' : 'text-[#4c1d95]'}`} />}
@@ -356,17 +356,17 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                 </div>
 
                 <div>
-                  <h4 className={`font-medium text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>
+                  <h4 className={`font-medium text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>
                     <ShieldCheck className={`w-4 h-4 ${themeText}`} /> Emergency Contacts
                   </h4>
                   <div className={`grid grid-cols-1 md:grid-cols-2 gap-3`}>
                     <div className={`p-3 rounded-lg ${hcMuted}`}>
-                      <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Dr. Sarah Jenkins</h4>
+                      <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Dr. Sarah Jenkins</h4>
                       <p className={`text-[10px] ${hcText}`}>Primary Oncologist</p>
                       <p className={`text-[11px] font-mono mt-1 ${themeText}`}>+55 11 9999-8888</p>
                     </div>
                     <div className={`p-3 rounded-lg ${hcMuted}`}>
-                      <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Central Hospital</h4>
+                      <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Central Hospital</h4>
                       <p className={`text-[10px] ${hcText}`}>Emergency Room 24/7</p>
                       <p className={`text-[11px] font-mono mt-1 ${themeText}`}>+55 11 3333-0000</p>
                     </div>
@@ -378,12 +378,12 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
           {activeTab === 'history' && (
             <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
-              <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Clinical Data History</h3>
+              <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Clinical Data History</h3>
               <p className={`text-[11px] mb-6 ${hcText}`}>Biopsy and staging reports imported via Health Information Exchange (HIE)</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className={`rounded-lg p-4 shadow-sm ${highContrast ? 'bg-gray-900 border-2 border-yellow-400' : darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}>
-                  <h4 className={`font-medium text-xs mb-4 flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#0f172a]'}`}>
+                  <h4 className={`font-medium text-xs mb-4 flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>
                     <Activity className={`w-3 h-3 ${highContrast ? 'text-yellow-400' : themeText}`} /> Biomarker Evolution
                   </h4>
                   <div className="h-32 w-full">
@@ -401,7 +401,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                 </div>
 
                 <div className={`rounded-lg p-4 shadow-sm ${highContrast ? 'bg-gray-900 border-2 border-yellow-400' : darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}>
-                  <h4 className={`font-medium text-xs mb-4 flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#0f172a]'}`}>
+                  <h4 className={`font-medium text-xs mb-4 flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>
                     <Activity className={`w-3 h-3 ${highContrast ? 'text-yellow-400' : themeText}`} /> Tumor Marker (CEA)
                   </h4>
                   <div className="h-32 w-full">
@@ -428,7 +428,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     <div className="flex items-center gap-2">
                       <FileText className={`w-4 h-4 ${hcText}`} />
                       <div>
-                        <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Mammography Report</h4>
+                        <h4 className={`font-medium text-xs ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Mammography Report</h4>
                         <p className={`text-[10px] ${hcText}`}>Dr. S. J. • Diagnostic Center</p>
                       </div>
                     </div>
@@ -547,12 +547,12 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             <div className={`rounded-xl shadow-sm flex flex-col h-[600px] animate-in fade-in overflow-hidden ${hcBg}`}>
               <div className={`p-4 flex items-center justify-between border-b ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#fdf2f8] border-pink-100'}`}>
                 <div>
-                  <h3 className={`font-medium text-sm flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#0f172a]'}`}><MessageSquare className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-pink-300' : 'text-[#db2777]'}`} /> AI Health Assistant</h3>
+                  <h3 className={`font-medium text-sm flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}><MessageSquare className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-pink-300' : 'text-[#db2777]'}`} /> AI Health Assistant</h3>
                   <p className={`text-[11px] mt-0.5 ${hcText}`}>Helping you support the patient's journey</p>
                 </div>
               </div>
               
-              <div className={`flex-1 p-6 overflow-y-auto space-y-4 ${highContrast ? 'bg-black' : darkMode ? 'bg-[#0f172a]' : 'bg-white'}`}>
+              <div className={`flex-1 p-6 overflow-y-auto space-y-4 ${highContrast ? 'bg-black' : darkMode ? 'bg-[#2d0a4d]' : 'bg-white'}`}>
                 {messages.map((msg, i) => (
                   <div 
                     key={i} 
@@ -563,7 +563,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     }`}
                   >
                     {msg.text.split('\n\n').map((paragraph, idx) => (
-                      <p key={idx} className={`text-xs leading-relaxed ${idx > 0 ? 'mt-2' : ''} ${msg.role === 'ai' ? (highContrast ? 'text-white' : 'text-[#0f172a]') : 'font-medium'}`}>
+                      <p key={idx} className={`text-xs leading-relaxed ${idx > 0 ? 'mt-2' : ''} ${msg.role === 'ai' ? (highContrast ? 'text-white' : 'text-[#2d0a4d]') : 'font-medium'}`}>
                         {paragraph.split('**').map((part, index) => 
                           index % 2 === 1 ? <strong key={index}>{part}</strong> : part
                         )}
@@ -594,7 +594,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                     placeholder="Type your question..." 
-                    className={`flex-1 rounded-md px-3 py-2 text-xs focus:outline-none ${highContrast ? 'bg-black border border-yellow-400 text-white focus:border-yellow-300' : 'bg-white border border-gray-300 text-[#0f172a] focus:border-[#db2777]'}`} 
+                    className={`flex-1 rounded-md px-3 py-2 text-xs focus:outline-none ${highContrast ? 'bg-black border border-yellow-400 text-white focus:border-yellow-300' : 'bg-white border border-gray-300 text-[#2d0a4d] focus:border-[#db2777]'}`} 
                   />
                   <button onClick={() => handleSendMessage()} className={`px-4 py-2 rounded-md text-xs font-medium transition-colors shadow-sm flex items-center justify-center ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] hover:bg-[#be185d] text-white'}`}>
                     <Send className="w-4 h-4" />
@@ -611,9 +611,9 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
       {showAlarmPopup && selectedMedForAlarm && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
           <div className={`w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden ${hcBg} animate-in zoom-in-95 duration-300`}>
-            <div className={`p-6 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-100 bg-[#f8fafc]'}`}>
+            <div className={`p-6 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#2d0a4d] border-white/10'}`}>
               <div className="flex items-center justify-between">
-                <h3 className={`font-medium text-sm ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#0f172a]'}`}>Configure Support Alarm</h3>
+                <h3 className={`font-medium text-sm ${highContrast ? 'text-yellow-400' : 'text-white'}`}>Configure Support Alarm</h3>
                 <button onClick={() => setShowAlarmPopup(false)} className={`p-1 rounded-full hover:bg-gray-200 transition-colors ${hcText}`}>
                   <X className="w-4 h-4" />
                 </button>
@@ -624,7 +624,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                 <Clock className="w-5 h-5 text-[#4c1d95]" />
                 <div>
                   <p className="text-[10px] font-medium text-[#4c1d95] uppercase">Target Task</p>
-                  <p className={`text-xs font-medium ${highContrast || darkMode ? 'text-white' : 'text-[#0f172a]'}`}>{selectedMedForAlarm?.name}</p>
+                  <p className={`text-xs font-medium ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>{selectedMedForAlarm?.name}</p>
                 </div>
               </div>
 
@@ -654,7 +654,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
       {showExamSim && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className={`w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden ${hcBg}`}>
-            <div className={`p-6 border-b flex items-center justify-between ${themeBg}`}>
+            <div className={`p-6 border-b flex items-center justify-between ${highContrast ? 'bg-gray-900' : 'bg-[#2d0a4d] text-white border-b border-white/10'}`}>
               <h3 className="font-medium text-white">Procedure Details</h3>
               <button onClick={() => setShowExamSim(false)}><X className="w-5 h-5 text-white" /></button>
             </div>

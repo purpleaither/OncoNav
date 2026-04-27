@@ -27,7 +27,7 @@ function App() {
         { id: 2, text: "Appointment confirmed: Tomorrow at 14:00.", time: "1d ago" }
       ];
       case 'professional': return [
-        { id: 1, text: "Squeeze-in request: Critical risk biopsy #44556.", time: "10m ago" },
+        { id: 1, text: "AI Squeeze-in Request: Your patient P. G. is 1 day away from breaching the 60-Day Mandate. Can you overbook her Biopsy for tomorrow (Tue) at 11:00 AM?", time: "10m ago" },
         { id: 2, text: "Pathology report uploaded for Patient #10293.", time: "3h ago" }
       ];
       case 'manager': return [
@@ -129,10 +129,10 @@ function App() {
                 </div>
                 <div className="flex flex-col mt-[30px]">
                   <h1
-                    className={`text-5xl font-light ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}
+                    className={`text-5xl font-light ${highContrast ? 'text-white' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}
                   >
                     <span className={highContrast ? 'text-yellow-300' : ''}>OncoNav</span>{' '}
-                    <span className={`${highContrast ? 'text-white' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'} uppercase`}>Global</span>
+                    <span className={`${highContrast ? 'text-white' : darkMode ? 'text-white' : 'text-[#4c1d95]'} uppercase font-bold`}>Global</span>
                   </h1>
                   <h2
                     style={{ fontFamily: "'Julius Sans One', sans-serif" }}
@@ -154,175 +154,42 @@ function App() {
               </p>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-20 animate-in fade-in duration-700 delay-150">
-
-            {/* LEFT: 4-Step Workflow */}
-            <div className={`rounded-3xl p-6 shadow-sm border ${highContrast ? 'bg-gray-900 border-gray-800' : darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <p style={{ fontFamily: "'Julius Sans One', sans-serif" }} className={`text-[10px] uppercase tracking-widest mb-4 text-center ${highContrast ? 'text-gray-500' : darkMode ? 'text-gray-500' : 'text-[#94a3b8]'}`}>Platform Workflow — Click a step to expand</p>
-
-              {/* Horizontal Stepper Row — no min-width to avoid scroll */}
-              <div className="flex items-start w-full">
-
-                {/* STEP 1 */}
-                <div className="flex flex-col items-center flex-1 min-w-0">
-                  <button
-                    onClick={() => setExpandedStep(expandedStep === 1 ? null : 1)}
-                    className={`w-full flex flex-col items-center gap-1.5 p-2 transition-all duration-200 group`}
-                  >
-                    <FileText className={`w-5 h-5 group-hover:scale-110 transition-transform ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
-                    <span className={`text-xs font-medium uppercase tracking-wide text-center leading-none ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>Step 1</span>
-                    <span className={`text-[11px] text-center leading-tight hidden sm:block ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Data Trace</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 text-gray-400 ${expandedStep === 1 ? 'rotate-180' : ''}`} />
-                  </button>
-                  {expandedStep === 1 && (
-                    <div className="mt-3 w-full space-y-2 animate-in fade-in slide-in-from-top-3 duration-300">
-                      <p className="text-[10px] text-[#64748b] italic text-center mb-2">Capturing raw inputs from the healthcare network.</p>
-                      {[{ icon: FileText, label: 'Clinical Data', color: darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]' },
-                      { icon: Clock, label: 'Flow Data', color: darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]' },
-                      { icon: ShieldCheck, label: 'Control Data', color: darkMode ? 'text-[#e9d5ff]' : 'text-[#5b21b6]' }].map(({ icon: Icon, label, color }) => (
-                        <div key={label} className="bg-[#f8fafc] p-2.5 rounded-xl border border-gray-100 flex items-center gap-2">
-                          <Icon className={`w-3.5 h-3.5 shrink-0 ${color}`} />
-                          <span className="text-[11px] font-medium text-[#0f172a]">{label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Arrow */}
-                <div className="flex items-start pt-4 px-1 shrink-0">
-                  <ChevronRight className={`w-4 h-4 opacity-40 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
-                </div>
-
-                {/* STEP 2 */}
-                <div className="flex flex-col items-center flex-1 min-w-0">
-                  <button
-                    onClick={() => setExpandedStep(expandedStep === 2 ? null : 2)}
-                    className={`w-full flex flex-col items-center gap-1.5 p-2 transition-all duration-200 group`}
-                  >
-                    <Database className={`w-5 h-5 group-hover:scale-110 transition-transform ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#fb7185]' : 'text-[#db2777]'}`} />
-                    <span className={`text-xs font-medium uppercase tracking-wide text-center leading-none ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>Step 2</span>
-                    <span className={`text-[11px] text-center leading-tight hidden sm:block ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>HIE</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 text-gray-400 ${expandedStep === 2 ? 'rotate-180' : ''}`} />
-                  </button>
-                  {expandedStep === 2 && (
-                    <div className="mt-3 w-full animate-in fade-in slide-in-from-top-3 duration-300 bg-purple-50 rounded-2xl p-4 border border-purple-100">
-                      <p className="text-[10px] text-[#64748b] italic text-center mb-2">Cross-referencing to eliminate care gaps.</p>
-                      <div className={`w-10 h-10 rounded-xl bg-white flex items-center justify-center border border-pink-100 mx-auto mb-3 shadow-sm ${darkMode ? 'text-[#fb7185]' : 'text-[#db2777]'}`}>
-                        <Database className="w-5 h-5" />
-                      </div>
-                      <p className="text-[11px] font-medium text-[#0f172a] text-center mb-1">Health Information Exchange (HIE)</p>
-                      <p className="text-[10px] text-[#64748b] text-center leading-relaxed">Cross-referencing datasets to eliminate <span className={`${darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'} italic`}>care fragmentation</span> and maintain <span className={`${darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'} italic`}>legal compliance</span>.</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Arrow */}
-                <div className="flex items-start pt-4 px-1 shrink-0">
-                  <ChevronRight className={`w-4 h-4 opacity-40 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
-                </div>
-
-                {/* STEP 3 */}
-                <div className="flex flex-col items-center flex-1 min-w-0">
-                  <button
-                    onClick={() => setExpandedStep(expandedStep === 3 ? null : 3)}
-                    className={`w-full flex flex-col items-center gap-1.5 p-2 transition-all duration-200 group`}
-                  >
-                    <Activity className={`w-5 h-5 group-hover:scale-110 transition-transform ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
-                    <span className={`text-xs font-medium uppercase tracking-wide text-center leading-none ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>Step 3</span>
-                    <span className={`text-[11px] text-center leading-tight hidden sm:block ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>AI Agent</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 text-gray-400 ${expandedStep === 3 ? 'rotate-180' : ''}`} />
-                  </button>
-                  {expandedStep === 3 && (
-                    <div className="mt-3 w-full space-y-2 animate-in fade-in slide-in-from-top-3 duration-300">
-                      <p className="text-[10px] text-[#64748b] italic text-center mb-2">Intelligent agents taking autonomous actions.</p>
-                      {[{ icon: LayoutDashboard, label: 'Network Manager', color: darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]' },
-                      { icon: CalendarClock, label: 'Smart Scheduling', color: darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]' },
-                      { icon: Bell, label: 'Patient Assistant', color: darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]' }].map(({ icon: Icon, label, color }) => (
-                        <div key={label} className="bg-white p-2.5 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2">
-                          <Icon className={`w-3.5 h-3.5 shrink-0 ${color}`} />
-                          <span className="text-[11px] font-medium text-[#0f172a]">{label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Arrow */}
-                <div className="flex items-start pt-4 px-1 shrink-0">
-                  <ChevronRight className={`w-4 h-4 opacity-40 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
-                </div>
-
-                {/* STEP 4 */}
-                <div className="flex flex-col items-center flex-1 min-w-0">
-                  <button
-                    onClick={() => setExpandedStep(expandedStep === 4 ? null : 4)}
-                    className={`w-full flex flex-col items-center gap-1.5 p-2 transition-all duration-200 group`}
-                  >
-                    <TrendingUp className={`w-5 h-5 group-hover:scale-110 transition-transform ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
-                    <span className={`text-xs font-medium uppercase tracking-wide text-center leading-none ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>Step 4</span>
-                    <span className={`text-[11px] text-center leading-tight hidden sm:block ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Output</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 text-gray-400 ${expandedStep === 4 ? 'rotate-180' : ''}`} />
-                  </button>
-                  {expandedStep === 4 && (
-                    <div className="mt-3 w-full space-y-2 animate-in fade-in slide-in-from-top-3 duration-300">
-                      <p className="text-[10px] text-[#64748b] italic text-center mb-2">Delivering the 4 Core Pillars to the network.</p>
-                      {[{ icon: CalendarClock, label: 'Smart Scheduling', color: 'text-[#4c1d95]' },
-                      { icon: Video, label: 'Tele-Consultations', color: 'text-[#5b21b6]' },
-                      { icon: Repeat, label: 'Exam Flow (OCI)', color: 'text-[#d97706]' },
-                      { icon: TrendingDown, label: 'Cost Efficiency', color: 'text-[#5b21b6]' }].map(({ icon: Icon, label, color }) => (
-                        <div key={label} className="bg-[#f8fafc] p-2.5 rounded-xl border border-gray-100 flex items-center gap-2">
-                          <Icon className={`w-3.5 h-3.5 shrink-0 ${color}`} />
-                          <span className="text-[11px] font-medium text-[#0f172a]">{label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-              </div>
-            </div>
-
-            {/* RIGHT: 4 MVP Portals — same card as left */}
-            <div className={`rounded-3xl p-6 shadow-sm border flex flex-col ${highContrast ? 'bg-gray-900 border-gray-800' : darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <p style={{ fontFamily: "'Julius Sans One', sans-serif" }} className={`text-[10px] uppercase tracking-widest mb-4 text-center ${highContrast ? 'text-gray-500' : darkMode ? 'text-gray-500' : 'text-[#94a3b8]'}`}>Explore our 4 interconnected MVPs</p>
-              <div className="grid grid-cols-2 gap-3 flex-1">
-                <div onClick={() => handlePersonaSelect('patient')} className={`flex items-start gap-3 cursor-pointer rounded-2xl p-4 transition-all duration-200 hover:scale-[1.02] border ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-purple-300 shadow-sm hover:shadow-md'}`}>
-                  <UserCircle className={`w-6 h-6 shrink-0 mt-0.5 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
+          <div className="animate-in fade-in duration-700 delay-150">
+            {/* 4 MVP Portals */}
+            <div className={`rounded-3xl p-10 shadow-sm border ${highContrast ? 'bg-gray-900 border-gray-800' : darkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'}`}>
+              <p style={{ fontFamily: "'Julius Sans One', sans-serif" }} className={`text-[12px] uppercase tracking-[0.4em] mb-10 text-center ${highContrast ? 'text-gray-500' : darkMode ? 'text-gray-500' : 'text-[#94a3b8]'}`}>OncoNav Global Enterprise Portals</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div onClick={() => handlePersonaSelect('patient')} className={`flex flex-col items-center gap-4 cursor-pointer rounded-2xl p-8 transition-all duration-300 hover:scale-[1.05] border text-center ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-purple-300'}`}>
+                  <UserCircle className={`w-12 h-12 mb-2 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#4c1d95]'}`} />
                   <div>
-                    <h2 className={`text-sm font-medium mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Patient Portal</h2>
-                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>The Patient's Journey: AI Health Literacy and Flow Data tracking.</p>
+                    <h2 className={`text-lg font-medium mb-2 ${highContrast ? 'text-white' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>Patient Portal</h2>
+                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>AI Literacy & Flow Data.</p>
                   </div>
                 </div>
-                <div onClick={() => handlePersonaSelect('caregiver')} className={`flex items-start gap-3 cursor-pointer rounded-2xl p-4 transition-all duration-200 hover:scale-[1.02] border ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-pink-300 shadow-sm hover:shadow-md'}`}>
-                  <Heart className={`w-6 h-6 shrink-0 mt-0.5 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#fb7185]' : 'text-[#db2777]'}`} />
+                <div onClick={() => handlePersonaSelect('caregiver')} className={`flex flex-col items-center gap-4 cursor-pointer rounded-2xl p-8 transition-all duration-300 hover:scale-[1.05] border text-center ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-pink-300'}`}>
+                  <Heart className={`w-12 h-12 mb-2 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#db2777]'}`} />
                   <div>
-                    <h2 className={`text-sm font-medium mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Caregiver Portal</h2>
-                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>Family Support: Logistics, Medications & AI Assistant.</p>
+                    <h2 className={`text-lg font-medium mb-2 ${highContrast ? 'text-white' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>Caregiver Portal</h2>
+                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>Family Support & Logistics.</p>
                   </div>
                 </div>
-                <div onClick={() => handlePersonaSelect('professional')} className={`flex items-start gap-3 cursor-pointer rounded-2xl p-4 transition-all duration-200 hover:scale-[1.02] border ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-red-200 shadow-sm hover:shadow-md'}`}>
-                  <Stethoscope className={`w-6 h-6 shrink-0 mt-0.5 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#fca5a5]' : 'text-[#7f1d1d]'}`} />
+                <div onClick={() => handlePersonaSelect('professional')} className={`flex flex-col items-center gap-4 cursor-pointer rounded-2xl p-8 transition-all duration-300 hover:scale-[1.05] border text-center ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-red-200'}`}>
+                  <Stethoscope className={`w-12 h-12 mb-2 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#7f1d1d]'}`} />
                   <div>
-                    <h2 className={`text-sm font-medium mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Professional Portal</h2>
-                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>Smart Scheduling & Tele-Health via HIE integration.</p>
+                    <h2 className={`text-lg font-medium mb-2 ${highContrast ? 'text-white' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>Professional Portal</h2>
+                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>Smart Scheduling & HIE.</p>
                   </div>
                 </div>
-                <div onClick={() => handlePersonaSelect('manager')} className={`flex items-start gap-3 cursor-pointer rounded-2xl p-4 transition-all duration-200 hover:scale-[1.02] border ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-indigo-300 shadow-sm hover:shadow-md'}`}>
-                  <LayoutDashboard className={`w-6 h-6 shrink-0 mt-0.5 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-[#e9d5ff]' : 'text-[#4c1d95]'}`} />
+                <div onClick={() => handlePersonaSelect('manager')} className={`flex flex-col items-center gap-4 cursor-pointer rounded-2xl p-8 transition-all duration-300 hover:scale-[1.05] border text-center ${highContrast ? 'bg-gray-900 border-gray-700 hover:border-yellow-400' : 'bg-white border-gray-200 hover:border-indigo-300'}`}>
+                  <LayoutDashboard className={`w-12 h-12 mb-2 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#4c1d95]'}`} />
                   <div>
-                    <h2 className={`text-sm font-medium mb-1 ${highContrast ? 'text-white' : 'text-[#0f172a]'}`}>Manager Portal</h2>
-                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>Cost Efficiency & Control Data auditing.</p>
+                    <h2 className={`text-lg font-medium mb-2 ${highContrast ? 'text-white' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>Manager Portal</h2>
+                    <p className={`text-xs leading-relaxed ${highContrast ? 'text-gray-400' : 'text-[#64748b]'}`}>Cost Efficiency & Auditing.</p>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-
-
-
         </div>
       </div>
     );
@@ -344,23 +211,23 @@ function App() {
     <div 
       style={{ zoom: fontSize === 'large' ? 1.15 : 1 }}
       className={`min-h-screen flex flex-col font-sans relative transition-all duration-300
-      ${highContrast ? 'high-contrast' : darkMode ? 'dark-mode' : 'bg-[#f1f5f9] text-[#0f172a]'}`}>
+      ${highContrast ? 'high-contrast' : darkMode ? 'dark-mode' : 'bg-[#f1f5f9] text-[#2d0a4d]'}`}>
 
       <header className={`sticky top-0 z-40 px-6 py-4 flex items-center justify-between border-b ${highContrast ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
         <div className="flex items-center gap-4">
           <button
             onClick={() => handlePersonaSelect(null)}
-            className={`px-4 py-2 rounded-lg flex items-center gap-2 font-medium text-xs transition-all border ${highContrast ? 'text-white bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-[#f8fafc] text-[#0f172a] hover:bg-gray-100 border-gray-200 shadow-sm'}`}
+            className={`px-4 py-2 rounded-lg flex items-center gap-2 font-medium text-xs transition-all border ${highContrast ? 'text-white bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-[#f8fafc] text-[#2d0a4d] hover:bg-gray-100 border-gray-200 shadow-sm'}`}
           >
             <Home className="w-4 h-4" /> Return to Menu
           </button>
 
           <div className="hidden md:flex items-center gap-3 border-l border-gray-200 pl-4 ml-2">
             <div className="flex flex-col">
-              <span className="text-[9px] font-medium text-gray-400 uppercase tracking-[0.2em] leading-none mb-1">OncoNav GLOBAL</span>
+              <span className={`text-[9px] font-medium uppercase tracking-[0.2em] leading-none mb-1 ${darkMode ? 'text-white/50' : 'text-gray-400'}`}>OncoNav GLOBAL</span>
               <div className="flex items-center gap-2">
                 <PersonaIcon className={`w-3.5 h-3.5 ${PersonaColor}`} />
-                <h1 className="text-sm font-medium tracking-tight leading-none">{PersonaTitle}</h1>
+                <h1 className={`text-sm font-medium tracking-tight leading-none ${darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>{PersonaTitle}</h1>
               </div>
             </div>
           </div>
@@ -414,7 +281,7 @@ function App() {
             <p className="mt-8 font-medium text-sm tracking-widest uppercase text-gray-500 animate-pulse">Loading Workspace...</p>
           </div>
         )}
-        <div className={`max-w-7xl mx-auto animate-in fade-in duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`max-w-6xl mx-auto animate-in fade-in duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
           {persona === 'patient' && <PatientView highContrast={highContrast} darkMode={darkMode} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
           {persona === 'caregiver' && <CaregiverView highContrast={highContrast} darkMode={darkMode} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
           {persona === 'manager' && <ManagerView highContrast={highContrast} darkMode={darkMode} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
