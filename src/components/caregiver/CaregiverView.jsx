@@ -52,7 +52,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
       if (lowerText.includes('drive') || lowerText.includes('transport') || lowerText.includes('escort') || lowerText.includes('pick up')) {
         aiResponse = "Yes, it is highly recommended that you accompany the patient. While a biopsy uses local anesthesia, they may feel sore or emotional afterward. Having you there will provide comfort, and you can safely drive them home.";
-      } 
+      }
       else if (lowerText.includes('eat') || lowerText.includes('food') || lowerText.includes('fasting')) {
         aiResponse = "**Fasting is not required.** Please ensure the patient eats a light, comfortable meal before her appointment to keep her blood sugar stable and reduce anxiety.";
       }
@@ -73,24 +73,24 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
     { date: 'Mar', leukocytes: 8.5, hemoglobin: 12.5 },
   ];
 
-  const hcBg = highContrast 
-    ? 'bg-black text-white border-2 border-yellow-400' 
-    : darkMode 
-      ? 'bg-gray-900 border border-gray-800 text-gray-100' 
+  const hcBg = highContrast
+    ? 'bg-black text-white border-2 border-yellow-400'
+    : darkMode
+      ? 'bg-gray-900 border border-gray-800 text-gray-100'
       : 'bg-white border border-gray-200 text-[#2d0a4d]';
 
-  const hcText = highContrast 
-    ? 'text-yellow-300' 
-    : darkMode 
-      ? 'text-gray-100' 
+  const hcText = highContrast
+    ? 'text-yellow-300'
+    : darkMode
+      ? 'text-gray-100'
       : 'text-[#64748b]';
 
-  const hcMuted = highContrast 
-    ? 'bg-gray-800 border-2 border-yellow-400 text-white' 
-    : darkMode 
-      ? 'bg-gray-800 border border-gray-700 text-white' 
+  const hcMuted = highContrast
+    ? 'bg-gray-800 border-2 border-yellow-400 text-white'
+    : darkMode
+      ? 'bg-gray-800 border border-gray-700 text-white'
       : 'bg-[#f8fafc] border border-gray-200 text-[#334155]';
-  
+
   const themeColor = highContrast ? 'yellow-400' : '[#db2777]';
   const themeBg = highContrast ? 'bg-yellow-400' : 'bg-[#db2777]';
   const themeText = highContrast ? 'text-yellow-400' : 'text-[#db2777]';
@@ -119,14 +119,14 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
   return (
     <div className="animate-in fade-in duration-500 relative pb-20 md:pb-0">
-      
+
       {/* FIXED MOBILE NAVIGATION */}
       <nav className={`fixed bottom-0 left-0 right-0 z-40 md:hidden flex border-t ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]'}`}>
         <button
           onClick={() => setActiveTab('pathway')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'pathway'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
             }`}
         >
           <Activity className="w-4 h-4" />
@@ -135,8 +135,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
         <button
           onClick={() => setActiveTab('care')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'care'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
             }`}
         >
           <ShieldCheck className="w-4 h-4" />
@@ -145,8 +145,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
         <button
           onClick={() => setActiveTab('observations')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'observations'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
             }`}
         >
           <ClipboardCheck className="w-4 h-4" />
@@ -155,25 +155,42 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
         <button
           onClick={() => setActiveTab('ai')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'ai'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
             }`}
         >
           <MessageSquare className="w-4 h-4" />
           <span className={highContrast && activeTab === 'ai' ? 'text-yellow-400' : ''}>AI</span>
         </button>
       </nav>
-      
+
       <div className="xl:grid xl:grid-cols-12 gap-6">
-        
+
         {/* Left Column: Progress & Agenda */}
         <div className="xl:col-span-4 space-y-6">
           <div className={`rounded-xl p-6 shadow-sm flex flex-col items-center justify-center ${hcBg}`}>
-            <h3 className={`font-medium text-sm mb-6 text-center leading-tight ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Patient Timeline Monitor<br/><span className={`text-[10px] uppercase tracking-widest ${hcText}`}>Flow Data (60-Day Limit)</span></h3>
+            <h3 className={`font-medium text-sm mb-6 text-center leading-tight ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Patient Timeline Monitor<br /><span className={`text-[10px] uppercase tracking-widest ${hcText}`}>Flow Data (60-Day Limit)</span></h3>
             <div className="relative w-32 h-32 mb-5">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke={highContrast ? 'rgba(255,255,255,0.1)' : '#f1f5f9'} strokeWidth="8" />
-                <circle cx="50" cy="50" r="40" fill="none" stroke={highContrast ? '#facc15' : '#db2777'} strokeWidth="8" strokeDasharray="251.2" strokeDashoffset={251.2 * (1 - 42/60)} strokeLinecap="round" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={highContrast ? 'rgba(255,255,255,0.2)' : darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9'}
+                  strokeWidth="8"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={highContrast ? '#facc15' : darkMode ? '#f472b6' : '#db2777'}
+                  strokeWidth="8"
+                  strokeDasharray="251.2"
+                  strokeDashoffset={251.2 * (1 - 42 / 60)}
+                  strokeLinecap="round"
+                />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className={`text-3xl font-medium ${themeText}`}>42</span>
@@ -198,7 +215,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             <div className={`grid grid-cols-7 gap-1 text-center text-xs ${highContrast ? 'text-white' : 'text-[#334155]'}`}>
               {Array.from({ length: 30 }).map((_, i) => {
                 const day = i + 1;
-                const isHighlight = day === 15; 
+                const isHighlight = day === 15;
                 return (
                   <div key={i} className={`p-1.5 rounded-md ${isHighlight ? (highContrast ? 'bg-yellow-400 text-black font-medium shadow-md' : 'bg-[#db2777] text-white font-medium shadow-md') : (highContrast ? 'hover:bg-gray-800' : 'hover:bg-gray-100')}`}>
                     {day}
@@ -211,7 +228,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
         {/* Right Column: Content Tabs */}
         <div className="xl:col-span-8 space-y-6">
-          
+
           {/* Navigation */}
           <div className={`flex rounded-lg p-1 shadow-sm mb-6 flex-wrap md:flex-nowrap ${hcBg}`}>
             {[
@@ -220,14 +237,13 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
               { id: 'care', label: 'Care & Support' },
               { id: 'observations', label: 'Observation Log' }
             ].map((tab) => (
-              <button 
+              <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${
-                  activeTab === tab.id 
-                    ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#fdf2f8] text-[#db2777] shadow-sm border border-pink-200')) 
+                className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${activeTab === tab.id
+                    ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#fdf2f8] text-[#db2777] shadow-sm border border-pink-200'))
                     : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>
@@ -235,8 +251,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             <button
               onClick={() => setActiveTab('ai')}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${activeTab === 'ai'
-                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#db2777] text-white shadow-sm border border-[#db2777]'))
-                  : (highContrast ? 'text-yellow-400 border border-yellow-400 hover:bg-gray-900' : 'text-[#db2777] hover:bg-gray-100')
+                ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#db2777] text-white shadow-sm border border-[#db2777]'))
+                : (highContrast ? 'text-yellow-400 border border-yellow-400 hover:bg-gray-900' : 'text-[#db2777] hover:bg-gray-100')
                 }`}
             >
               <MessageSquare className="w-3.5 h-3.5" /> AI Health Assistant
@@ -247,7 +263,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
               <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Patient Flow Organization</h3>
               <p className={`text-[11px] mb-6 ${hcText}`}>Mandatory procedures sequence for the patient</p>
-              
+
               <div className="space-y-3">
                 <div className={`flex items-center gap-4 p-3 rounded-lg ${hcMuted}`}>
                   <div className={`w-8 h-8 rounded-md flex items-center justify-center ${highContrast ? 'bg-black border border-yellow-400 text-yellow-400' : 'bg-white border border-gray-200 text-[#db2777]'}`}>
@@ -272,7 +288,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                   </div>
                   <ChevronRight className={`w-4 h-4 ${hcText}`} />
                 </div>
-                
+
                 <div className={`flex items-center gap-4 p-3 rounded-lg border border-dashed opacity-70 ${highContrast ? 'border-yellow-400/50 bg-black' : 'border-gray-300'}`}>
                   <div className={`w-8 h-8 rounded-md flex items-center justify-center ${highContrast ? 'bg-gray-900 border border-yellow-400/50 text-yellow-400/50' : 'bg-gray-50 border border-gray-200 text-gray-400'}`}>
                     <div className={`w-1.5 h-1.5 rounded-full ${highContrast ? 'bg-yellow-400/50' : 'bg-gray-400'}`}></div>
@@ -290,7 +306,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
               <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Daily Care & Contacts</h3>
               <p className={`text-[11px] mb-6 ${hcText}`}>Manage the patient's medications and emergency network</p>
-              
+
               <div className="space-y-6">
                 <div>
                   <h4 className={`font-medium text-xs mb-3 flex items-center gap-2 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>
@@ -301,18 +317,16 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                       { name: 'Tamoxifen 20mg', time: '08:00 AM', desc: '1 pill daily' },
                       { name: 'Vitamin D3 2000 UI', time: '20:00 PM', desc: '1 pill daily' }
                     ].map((med) => (
-                      <div 
+                      <div
                         key={med.time}
-                        className={`flex flex-col gap-3 p-4 rounded-xl transition-all border ${
-                          highContrast ? 'border-yellow-400 bg-black' : darkMode ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-white'
-                        }`}
+                        className={`flex flex-col gap-3 p-4 rounded-xl transition-all border ${highContrast ? 'border-yellow-400 bg-black' : darkMode ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-white'
+                          }`}
                       >
                         <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-full flex flex-col items-center justify-center shrink-0 ${
-                            medsTaken[med.time]
+                          <div className={`w-10 h-10 rounded-full flex flex-col items-center justify-center shrink-0 ${medsTaken[med.time]
                               ? (highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white')
                               : (highContrast ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-500')
-                          }`}>
+                            }`}>
                             <Clock className="w-3.5 h-3.5 mb-0.5" />
                             <span className="text-[7px] font-medium leading-none">{med.time.split(' ')[0]}</span>
                           </div>
@@ -322,29 +336,27 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                           </div>
                           {medsTaken[med.time] && <CheckCircle2 className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-emerald-400' : 'text-[#4c1d95]'}`} />}
                         </div>
-                        
+
                         <div className="flex items-center gap-2 mt-1">
-                          <button 
+                          <button
                             onClick={() => setMedsTaken(prev => ({ ...prev, [med.time]: !prev[med.time] }))}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${
-                              medsTaken[med.time]
+                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${medsTaken[med.time]
                                 ? (highContrast ? 'bg-yellow-400 text-black' : (darkMode ? 'bg-emerald-900/50 text-emerald-400 border border-emerald-500/30' : 'bg-green-100 text-black border border-green-200'))
                                 : (highContrast ? 'border border-yellow-400 text-yellow-400' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50')
-                            }`}
+                              }`}
                           >
                             <Check className="w-3 h-3" />
                             <span>{medsTaken[med.time] ? 'Already Taken' : 'Mark as Taken'}</span>
                           </button>
-                          <button 
+                          <button
                             onClick={() => {
                               setSelectedMedForAlarm(med);
                               setShowAlarmPopup(true);
                             }}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${
-                              medsAlarm[med.time]
+                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${medsAlarm[med.time]
                                 ? (highContrast ? 'bg-yellow-400 text-black' : (darkMode ? 'bg-purple-900/50 text-purple-400 border border-purple-500/30' : 'bg-purple-100 text-black border border-purple-200'))
                                 : (highContrast ? 'border border-gray-700 text-gray-500' : 'bg-gray-50 border border-gray-200 text-gray-500 hover:bg-gray-100')
-                            }`}
+                              }`}
                           >
                             <Bell className="w-3 h-3" />
                             <span>{medsAlarm[med.time] ? 'Alarm Active' : 'Set Alarm'}</span>
@@ -380,7 +392,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             <div className={`rounded-xl p-6 shadow-sm animate-in fade-in ${hcBg}`}>
               <h3 className={`font-medium text-sm mb-1 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>Clinical Data History</h3>
               <p className={`text-[11px] mb-6 ${hcText}`}>Biopsy and staging reports imported via Health Information Exchange (HIE)</p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className={`rounded-lg p-4 shadow-sm ${highContrast ? 'bg-gray-900 border-2 border-yellow-400' : darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}>
                   <h4 className={`font-medium text-xs mb-4 flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>
@@ -390,11 +402,11 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={labData} margin={{ top: 5, right: 10, bottom: 5, left: -20 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={highContrast ? '#333' : darkMode ? '#475569' : '#e2e8f0'} />
-                        <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fontSize: 9, fill: highContrast ? '#facc15' : darkMode ? '#e2e8f0' : '#64748b'}} />
-                        <YAxis axisLine={false} tickLine={false} tick={{fontSize: 9, fill: highContrast ? '#facc15' : darkMode ? '#e2e8f0' : '#64748b'}} />
-                        <Tooltip contentStyle={highContrast ? {backgroundColor: '#000', color: '#fff', border: '1px solid #facc15'} : darkMode ? { backgroundColor: '#1f2937', color: '#fff', border: '1px solid #4b5563' } : {borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '11px'}} />
-                        <Line type="monotone" dataKey="leukocytes" name="Leukocytes" stroke={highContrast ? '#facc15' : darkMode ? '#fb7185' : '#db2777'} strokeWidth={2} dot={{r: 3}} />
-                        <Line type="monotone" dataKey="hemoglobin" name="Hemoglobin" stroke={highContrast ? '#fff' : darkMode ? '#ffffff' : '#be185d'} strokeWidth={2} dot={{r: 3}} />
+                        <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: highContrast ? '#facc15' : darkMode ? '#e2e8f0' : '#64748b' }} />
+                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: highContrast ? '#facc15' : darkMode ? '#e2e8f0' : '#64748b' }} />
+                        <Tooltip contentStyle={highContrast ? { backgroundColor: '#000', color: '#fff', border: '1px solid #facc15' } : darkMode ? { backgroundColor: '#1f2937', color: '#fff', border: '1px solid #4b5563' } : { borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '11px' }} />
+                        <Line type="monotone" dataKey="leukocytes" name="Leukocytes" stroke={highContrast ? '#facc15' : darkMode ? '#fb7185' : '#db2777'} strokeWidth={2} dot={{ r: 3 }} />
+                        <Line type="monotone" dataKey="hemoglobin" name="Hemoglobin" stroke={highContrast ? '#fff' : darkMode ? '#ffffff' : '#be185d'} strokeWidth={2} dot={{ r: 3 }} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
@@ -463,15 +475,14 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                         <button
                           key={symptom}
                           onClick={() => {
-                            setSelectedSymptoms(prev => 
+                            setSelectedSymptoms(prev =>
                               isSelected ? prev.filter(s => s !== symptom) : [...prev, symptom]
                             );
                           }}
-                          className={`px-4 py-2 rounded-full text-xs font-medium transition-all border ${
-                            isSelected 
-                              ? (highContrast ? 'bg-yellow-400 text-black border-yellow-400 shadow-md' : 'bg-[#db2777] text-white border-[#db2777] shadow-md scale-105') 
+                          className={`px-4 py-2 rounded-full text-xs font-medium transition-all border ${isSelected
+                              ? (highContrast ? 'bg-yellow-400 text-black border-yellow-400 shadow-md' : 'bg-[#db2777] text-white border-[#db2777] shadow-md scale-105')
                               : (highContrast ? 'bg-black border-yellow-400 text-yellow-400' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#db2777]')
-                          }`}
+                            }`}
                         >
                           {symptom}
                         </button>
@@ -485,13 +496,12 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     value={obsInput}
                     onChange={(e) => setObsInput(e.target.value)}
                     placeholder="Add additional clinical notes or observations..."
-                    className={`w-full h-24 p-4 rounded-xl text-xs focus:outline-none transition-all ${
-                      highContrast ? 'bg-black border-2 border-yellow-400 text-white' : 'bg-gray-50 border border-gray-200 focus:border-[#db2777] focus:bg-white'
-                    }`}
+                    className={`w-full h-24 p-4 rounded-xl text-xs focus:outline-none transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-white' : 'bg-gray-50 border border-gray-200 focus:border-[#db2777] focus:bg-white'
+                      }`}
                   />
                   <div className="flex items-center justify-between">
                     <p className={`text-[10px] ${hcText}`}>* Observations are analyzed by AI and forwarded to the clinical team if critical patterns emerge.</p>
-                    <button 
+                    <button
                       onClick={() => {
                         if (selectedSymptoms.length === 0 && !obsInput.trim()) return;
                         const newObs = {
@@ -505,9 +515,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                         setObsInput('');
                         setSelectedSymptoms([]);
                       }}
-                      className={`px-8 py-3 rounded-xl text-sm font-medium transition-all shadow-md active:scale-95 ${
-                        highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] text-white hover:bg-[#be185d]'
-                      }`}
+                      className={`px-8 py-3 rounded-xl text-sm font-medium transition-all shadow-md active:scale-95 ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] text-white hover:bg-[#be185d]'
+                        }`}
                     >
                       Log Observation & Sync
                     </button>
@@ -522,9 +531,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex flex-wrap gap-2">
                         {obs.symptoms.map(s => (
-                          <span key={s} className={`px-2 py-0.5 rounded text-[9px] font-medium uppercase tracking-tighter ${
-                            obs.urgent ? 'bg-red-100 text-red-700' : 'bg-pink-50 text-[#db2777]'
-                          }`}>
+                          <span key={s} className={`px-2 py-0.5 rounded text-[9px] font-medium uppercase tracking-tighter ${obs.urgent ? 'bg-red-100 text-red-700' : 'bg-pink-50 text-[#db2777]'
+                            }`}>
                             {s}
                           </span>
                         ))}
@@ -551,20 +559,19 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                   <p className={`text-[11px] mt-0.5 ${hcText}`}>Helping you support the patient's journey</p>
                 </div>
               </div>
-              
+
               <div className={`flex-1 p-6 overflow-y-auto space-y-4 ${highContrast ? 'bg-black' : darkMode ? 'bg-[#2d0a4d]' : 'bg-white'}`}>
                 {messages.map((msg, i) => (
-                  <div 
-                    key={i} 
-                    className={`p-4 rounded-xl shadow-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 border ${
-                      msg.role === 'ai' 
-                        ? `rounded-tl-none ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f8fafc] border-gray-200'}` 
+                  <div
+                    key={i}
+                    className={`p-4 rounded-xl shadow-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 border ${msg.role === 'ai'
+                        ? `rounded-tl-none ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f8fafc] border-gray-200'}`
                         : `rounded-tr-none ml-auto ${highContrast ? 'bg-yellow-400 text-black border-yellow-500' : darkMode ? 'bg-[#9d174d] text-white border-pink-700' : 'bg-[#db2777] text-white border-pink-700'}`
-                    }`}
+                      }`}
                   >
                     {msg.text.split('\n\n').map((paragraph, idx) => (
                       <p key={idx} className={`text-xs leading-relaxed ${idx > 0 ? 'mt-2' : ''} ${msg.role === 'ai' ? (highContrast ? 'text-white' : 'text-[#2d0a4d]') : 'font-medium'}`}>
-                        {paragraph.split('**').map((part, index) => 
+                        {paragraph.split('**').map((part, index) =>
                           index % 2 === 1 ? <strong key={index}>{part}</strong> : part
                         )}
                       </p>
@@ -576,7 +583,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
               <div className={`px-4 pt-3 flex gap-2 overflow-x-auto border-t custom-scrollbar pb-1 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-200'}`}>
                 {['Do I need to drive her?', 'Can she eat beforehand?', 'What should I monitor?'].map(suggestion => (
-                  <button 
+                  <button
                     key={suggestion}
                     onClick={() => handleSendMessage(suggestion)}
                     className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[10px] font-medium transition-colors ${highContrast ? 'bg-black border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black' : 'bg-white border border-[#db2777] text-[#db2777] hover:bg-[#db2777] hover:text-white'}`}
@@ -588,13 +595,13 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
 
               <div className={`p-4 ${highContrast ? 'bg-gray-900' : 'bg-[#f8fafc]'}`}>
                 <div className="flex gap-2">
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                    placeholder="Type your question..." 
-                    className={`flex-1 rounded-md px-3 py-2 text-xs focus:outline-none ${highContrast ? 'bg-black border border-yellow-400 text-white focus:border-yellow-300' : 'bg-white border border-gray-300 text-[#2d0a4d] focus:border-[#db2777]'}`} 
+                    placeholder="Type your question..."
+                    className={`flex-1 rounded-md px-3 py-2 text-xs focus:outline-none ${highContrast ? 'bg-black border border-yellow-400 text-white focus:border-yellow-300' : 'bg-white border border-gray-300 text-[#2d0a4d] focus:border-[#db2777]'}`}
                   />
                   <button onClick={() => handleSendMessage()} className={`px-4 py-2 rounded-md text-xs font-medium transition-colors shadow-sm flex items-center justify-center ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] hover:bg-[#be185d] text-white'}`}>
                     <Send className="w-4 h-4" />
@@ -639,7 +646,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={() => { setMedsAlarm(prev => ({ ...prev, [selectedMedForAlarm.time]: true })); setShowAlarmPopup(false); }}
                 className={`w-full py-3 rounded-xl text-xs font-medium transition-all ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#db2777] text-white shadow-lg shadow-pink-100'}`}
               >

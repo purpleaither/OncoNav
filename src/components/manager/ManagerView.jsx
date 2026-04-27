@@ -1,11 +1,14 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid, Legend, Cell, PieChart, Pie } from 'recharts';
-import { AlertTriangle, Clock, CheckCircle, Video, X, Check, ShieldCheck, MapPin, User, Activity, TrendingDown, RefreshCw, ArrowRightLeft, Filter, ArrowUpDown, LayoutDashboard, Send, MessageSquare, ChevronRight, CheckCircle2, Search, FileText, ArrowRight, Network } from 'lucide-react';
+import { AlertTriangle, Clock, CheckCircle, Video, X, Check, ShieldCheck, MapPin, User, Activity, TrendingDown, RefreshCw, ArrowRightLeft, Filter, ArrowUpDown, LayoutDashboard, Send, MessageSquare, ChevronRight, CheckCircle2, Search, FileText, ArrowRight, Network, Sparkles, Brain, Database } from 'lucide-react';
 
 export default function ManagerView({ highContrast, darkMode, isAuthenticated, setIsAuthenticated }) {
   const [activeTab, setActiveTab] = useState('pathways');
   const [showPatientSim, setShowPatientSim] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [patientTab, setPatientTab] = useState('timeline');
+  const [showDocViewer, setShowDocViewer] = useState(false);
+  const [selectedDoc, setSelectedDoc] = useState(null);
 
   const [filterPathway, setFilterPathway] = useState('All');
   const [filterRisk, setFilterRisk] = useState('All');
@@ -65,7 +68,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
   // ROUTING ACTIONS STATE
   const [routingActions, setRoutingActions] = useState([
     { id: 1, title: 'Load Balancing: North Zone', desc: 'PET-CT capacity at 0%. AI suggests shifting 12 non-critical scans to South Zone Hub.', impact: 'Reduces wait by 4 days', type: 'high', status: 'pending' },
-    { id: 2, title: 'Workload Shift: Dr. Jenkins', desc: 'Surgery backlog identified. Suggest routing biopsy reviews to Dr. Miller (Rural Cluster).', impact: 'Prevents mandate breach for 5 patients', type: 'critical', status: 'pending' }
+    { id: 2, title: 'Strategic Load Balancing', desc: 'Surgery backlog identified. Suggest routing biopsy reviews to Dr. Miller (Rural Cluster).', impact: 'Prevents mandate breach for 5 patients', type: 'critical', status: 'pending' }
   ]);
 
   // AI CHAT STATE
@@ -124,16 +127,16 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
   ]);
 
   const managerPatients = [
-    { id: '#84729', name: 'M. S.', pathway: 'Breast Cancer', type: 'red', desc: 'Secondary procedures delayed', daysLeft: 2, status: 'Critical Risk' },
-    { id: '#10293', name: 'N. R.', pathway: 'Breast Cancer', type: 'yellow', desc: 'Awaiting specialist consult', daysLeft: 12, status: 'Elevated Risk' },
-    { id: '#93847', name: 'E. F.', pathway: 'Lung Cancer', type: 'green', desc: 'Treatment initiated', daysLeft: 45, status: 'On Track' },
-    { id: '#54321', name: 'C. M.', pathway: 'Prostate Cancer', type: 'yellow', desc: 'Biopsy pending scheduling', daysLeft: 18, status: 'Elevated Risk' },
-    { id: '#67890', name: 'A. S.', pathway: 'Cervical Cancer', type: 'red', desc: 'Surgical center bottleneck', daysLeft: 5, status: 'Critical Risk' },
-    { id: '#24680', name: 'R. L.', pathway: 'Colon Cancer', type: 'green', desc: 'Chemotherapy started', daysLeft: 30, status: 'On Track' },
-    { id: '#13579', name: 'F. C.', pathway: 'Breast Cancer', type: 'green', desc: 'Post-op recovery', daysLeft: 50, status: 'On Track' },
-    { id: '#11223', name: 'J. C.', pathway: 'Lung Cancer', type: 'yellow', desc: 'Awaiting imaging results', daysLeft: 14, status: 'Elevated Risk' },
-    { id: '#44556', name: 'P. G.', pathway: 'Thyroid Cancer', type: 'red', desc: 'Critical Delay - AI Squeeze req.', daysLeft: 1, status: 'Critical Risk' },
-    { id: '#77889', name: 'R. A.', pathway: 'Prostate Cancer', type: 'green', desc: 'Radiation therapy', daysLeft: 40, status: 'On Track' }
+    { id: '#84729', name: 'M. S.', pathway: 'Breast Cancer', type: 'red', desc: 'Secondary procedures delayed', daysLeft: 2, status: 'Critical Risk', aiInsight: "Immediate surgical slot required. 85% risk of legal mandate breach. Central Hub fully saturated; redirect to private network partnership." },
+    { id: '#10293', name: 'N. R.', pathway: 'Breast Cancer', type: 'yellow', desc: 'Awaiting specialist consult', daysLeft: 12, status: 'Elevated Risk', aiInsight: "Awaiting specialist. 40% probability of delay escalation. Suggesting AI-matching with remote consultant from Regional Center." },
+    { id: '#93847', name: 'E. F.', pathway: 'Lung Cancer', type: 'green', desc: 'Treatment initiated', daysLeft: 45, status: 'On Track', aiInsight: "Treatment synchronized. Mandate compliance predicted at 99%. Routine monitoring sufficient." },
+    { id: '#54321', name: 'C. M.', pathway: 'Prostate Cancer', type: 'yellow', desc: 'Biopsy pending scheduling', daysLeft: 18, status: 'Elevated Risk', aiInsight: "Biopsy scheduling delay. PET-CT bottleneck detected at local clinic. Recommending shift to North Zone annex." },
+    { id: '#67890', name: 'A. S.', pathway: 'Cervical Cancer', type: 'red', desc: 'Surgical center bottleneck', daysLeft: 5, status: 'Critical Risk', aiInsight: "Surgical bottleneck identified. Mandate at risk. System suggests 'AI Squeeze' to override standard scheduling for this node." },
+    { id: '#24680', name: 'R. L.', pathway: 'Colon Cancer', type: 'green', desc: 'Chemotherapy started', daysLeft: 30, status: 'On Track', aiInsight: "Chemo supply chain verified. No flow risks detected. Patient moving to maintenance phase." },
+    { id: '#13579', name: 'F. C.', pathway: 'Breast Cancer', type: 'green', desc: 'Post-op recovery', daysLeft: 50, status: 'On Track', aiInsight: "Clinical goals met. Post-op recovery tracking normally. No managerial intervention required." },
+    { id: '#11223', name: 'J. C.', pathway: 'Lung Cancer', type: 'yellow', desc: 'Awaiting imaging results', daysLeft: 14, status: 'Elevated Risk', aiInsight: "Imaging backlog in Regional Hub. Delay in Radiology affects Next Milestone (Oncology). Suggesting digital radiology partner for faster readout." },
+    { id: '#44556', name: 'P. G.', pathway: 'Thyroid Cancer', type: 'red', desc: 'Critical Delay - AI Squeeze req.', daysLeft: 1, status: 'Critical Risk', aiInsight: "CRITICAL BREACH IMMINENT. Procedural node is unresponsive. Initiating emergency reallocation to Hub C with priority flag." },
+    { id: '#77889', name: 'R. A.', pathway: 'Prostate Cancer', type: 'green', desc: 'Radiation therapy', daysLeft: 40, status: 'On Track', aiInsight: "Pathway optimized. Radiation units in South Zone have 20% spare capacity. No resource risks." }
   ];
 
   const analyticsData = [
@@ -159,7 +162,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
 
   const filteredPatients = useMemo(() => {
     let result = managerPatients;
-    
+
     if (filterPathway !== 'All') {
       result = result.filter(p => p.pathway === filterPathway);
     }
@@ -171,8 +174,8 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
     }
 
     if (searchQuery) {
-      result = result.filter(p => 
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      result = result.filter(p =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.id.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -269,132 +272,6 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
         </div>
       )}
 
-      {/* PATIENT SIMULATOR (Centered & Professional Aesthetic) */}
-      {showPatientSim && selectedPatient && (
-        <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 md:p-8">
-          <div className="absolute inset-0" onClick={() => setShowPatientSim(false)}></div>
-          <div className={`${highContrast ? 'bg-black border-2 border-yellow-400 text-white' : 'bg-[#f8fafc] text-[#2d0a4d] shadow-2xl border border-gray-200'} relative w-full max-w-6xl h-full max-h-[90vh] rounded-3xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300`}>
-
-            {/* Top Navigation / Status Header */}
-            <div
-              className={`px-8 py-6 flex items-center justify-between border-b shrink-0 ${highContrast ? 'bg-black border-yellow-400' : 'bg-[#2d0a4d] border-white/5'}`}>
-              <div className="flex items-center gap-6">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-medium text-xl transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-400' : 'bg-white/5 border border-white/10 text-white shadow-lg'}`}>
-                  {selectedPatient?.name?.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className={`font-medium text-xl tracking-tight text-white`}>{selectedPatient?.name}</h3>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/10 border-white/20 text-white'}`}>Patient 360º Clinical Intel</span>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>Federated ID: {selectedPatient?.id}</span>
-                  </div>
-                  <div className="flex items-center gap-6 text-[11px] font-medium text-white/60">
-                    <span className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5 text-blue-400" /> 45Y • F</span>
-                    <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-blue-400" /> O+</span>
-                    <span className={`px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-[9px] font-semibold uppercase tracking-widest border border-blue-500/20`}>{selectedPatient?.pathway}</span>
-                    <span className={`px-2.5 py-1 rounded-md text-[9px] font-semibold uppercase tracking-widest border ${selectedPatient.type === 'red' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-green-500/10 text-green-400 border-green-500/20'}`}>{selectedPatient.status}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <button onClick={() => setShowPatientSim(false)} className={`p-2.5 rounded-full transition-all ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-white/5 text-white hover:bg-white/10'}`}><X className="w-5 h-5" /></button>
-              </div>
-            </div>
-
-            <div className="flex-1 flex overflow-hidden">
-              {/* LEFT SIDEBAR: AI MANAGER COPILOT */}
-              <div className={`w-[340px] border-r overflow-y-auto p-8 space-y-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Activity className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} />
-                  <h4 className={`text-[11px] font-medium uppercase tracking-widest ${highContrast ? 'text-yellow-400' : 'text-[#2d0a4d]'}`}>Manager Flow Insights</h4>
-                </div>
-
-                <div className="space-y-6">
-                  {[
-                    { title: 'Mandate Breach Risk', icon: 'alert', content: 'Patient is approaching the 60-day limit. Flow data indicates surgery bottleneck in North Zone.', action: 'Expedite Resource' },
-                    { title: 'Resource Alignment', icon: 'db', content: 'Regional MRI capacity available in South Zone. Shift possible for imaging follow-up.', action: 'Reallocate Slot' }
-                  ].map((insight, idx) => (
-                    <div key={idx} className={`p-6 rounded-2xl border transition-all hover:shadow-md ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 shadow-sm'}`}>
-                      <div className="flex items-center gap-2 mb-3">
-                        {insight.icon === 'alert' ? <AlertTriangle className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-red-600'}`} /> : <Network className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-blue-600'}`} />}
-                        <span className={`text-[10px] font-medium uppercase tracking-tighter ${highContrast ? 'text-white' : 'text-gray-900'}`}>{insight.title}</span>
-                      </div>
-                      <p className={`text-xs leading-relaxed ${hcText}`}>
-                        {insight.content}
-                      </p>
-                      <button className={`mt-4 w-full py-2.5 text-white text-[10px] font-medium rounded-xl transition-colors shadow-lg ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] hover:bg-[#3b0764]'}`}>
-                        {insight.action}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* MAIN CONTENT AREA */}
-              <div className={`flex-1 flex flex-col ${highContrast ? 'bg-black' : 'bg-white'}`}>
-                {/* Tab Navigation (Simplified for Manager) */}
-                <div className={`flex border-b px-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
-                  <button className={`px-8 py-5 text-xs font-medium uppercase tracking-widest border-b-4 ${highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95]'}`}>
-                    Flow Data Timeline
-                  </button>
-                </div>
-
-                <div className="flex-1 overflow-y-auto p-10">
-                  <div className="space-y-10 max-w-4xl">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="font-medium text-sm text-gray-900 uppercase tracking-tight">HIE Data Sequence Trace</h4>
-                    </div>
-
-                    <div className={`space-y-8 relative before:absolute before:inset-0 before:ml-4 before:h-full before:w-px ${highContrast ? 'before:bg-yellow-400/30' : 'before:bg-gray-100'}`}>
-                      <div className="relative flex items-start gap-8">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full border-4 shrink-0 z-10 shadow-sm ${highContrast ? 'border-black bg-yellow-400 text-black' : 'border-white bg-gray-100 text-[#4c1d95]'}`}>
-                          <CheckCircle2 className="w-4 h-4" />
-                        </div>
-                        <div className={`p-6 rounded-2xl flex-1 border-2 ${highContrast ? 'bg-black border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-sm text-gray-900">Primary Diagnostics</span>
-                            <span className="text-[10px] font-medium bg-gray-100 px-2 py-1 rounded text-gray-500">12 MAR</span>
-                          </div>
-                          <p className="text-xs text-gray-600 leading-relaxed">Clinical Data imported via HIE API. Results confirmed and synced with regional registry.</p>
-                        </div>
-                      </div>
-
-                      <div className="relative flex items-start gap-8">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full border-4 shrink-0 z-10 shadow-sm ${highContrast ? 'border-black bg-black border-2 border-yellow-400 text-yellow-400' : 'border-white bg-white border-2 border-gray-200 text-[#5b21b6]'}`}>
-                          {selectedPatient.type === 'green' ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <Clock className="w-4 h-4 text-red-600" />}
-                        </div>
-                        <div className={`p-6 rounded-2xl flex-1 border-2 ${highContrast ? 'border-yellow-400' : selectedPatient.type === 'green' ? 'border-gray-100 bg-[#f8fafc]' : 'border-red-100 bg-red-50/30'}`}>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-sm text-gray-900">Secondary Biopsy</span>
-                            <span className={`text-[9px] font-medium uppercase tracking-widest ${selectedPatient.type === 'green' ? 'text-green-600' : 'text-red-600'}`}>{selectedPatient.type === 'green' ? 'COMPLETED' : 'PENDING'}</span>
-                          </div>
-                          <p className="text-xs text-gray-600 leading-relaxed">
-                            {selectedPatient.type === 'green' ? 'Procedure performed within legal limits at South Zone Hub.' : 'Flow Data shows bottleneck at surgical center Hub B. Manager intervention suggested.'}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="relative flex items-start gap-8">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full border-4 shrink-0 z-10 shadow-sm ${highContrast ? 'border-black bg-black border-2 border-yellow-400 text-yellow-400' : 'border-white bg-white border-2 border-red-200 text-red-600'}`}>
-                          <AlertTriangle className="w-4 h-4" />
-                        </div>
-                        <div className={`p-6 rounded-2xl flex-1 border-2 ${highContrast ? 'border-yellow-400' : 'border-red-950/30 bg-red-950/5'}`}>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-sm text-red-950 uppercase">60-Day Mandate Deadline</span>
-                            <span className={`text-[10px] font-medium bg-red-950 px-2.5 py-1 rounded-full text-white`}>CRITICAL WINDOW</span>
-                          </div>
-                          <p className="text-xs text-red-950 leading-relaxed font-medium">System predicts breach if surgical scheduling is not broadcasted within {selectedPatient.daysLeft} days.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       <div className="xl:grid xl:grid-cols-12 gap-6">
 
         {/* LEFT COLUMN: Regional Network Pulse */}
@@ -459,8 +336,8 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 whitespace-nowrap px-5 py-2.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${activeTab === tab.id
-                    ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : (tab.id === 'ai' ? 'bg-[#4c1d95] text-white shadow-sm' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200')))
-                    : (highContrast ? (tab.id === 'ai' ? 'text-yellow-400 border border-yellow-400' : 'text-white hover:text-yellow-300') : (tab.id === 'ai' ? 'text-[#4c1d95] hover:bg-gray-100' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300'))
+                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : (tab.id === 'ai' ? 'bg-[#4c1d95] text-white shadow-sm' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200')))
+                  : (highContrast ? (tab.id === 'ai' ? 'text-yellow-400 border border-yellow-400' : 'text-white hover:text-yellow-300') : (tab.id === 'ai' ? 'text-[#4c1d95] hover:bg-gray-100' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300'))
                   }`}
               >
                 {tab.id === 'ai' && <MessageSquare className="w-3.5 h-3.5" />}
@@ -474,13 +351,13 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
               <div className="space-y-6 animate-in fade-in">
                 {/* NESTED: Regional Massive Dispatch (AI) */}
                 <div className={`rounded-xl shadow-sm h-full flex flex-col overflow-hidden ${hcBg}`}>
-                <div className={`p-6 border-b flex items-center gap-2 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#2d0a4d] text-white border-white/10'}`}>
-                  <Activity className={`w-5 h-5 ${highContrast ? 'text-yellow-400' : 'text-white'}`} />
-                  <div>
-                    <h3 className="font-medium text-sm">Regional Massive Dispatch (AI)</h3>
-                    <p className={`text-[10px] ${highContrast ? 'text-yellow-400' : 'text-white/60'}`}>Real-time urgent task broadcasting</p>
+                  <div className={`p-6 border-b flex items-center gap-2 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#2d0a4d] text-white border-white/10'}`}>
+                    <Activity className={`w-5 h-5 ${highContrast ? 'text-yellow-400' : 'text-white'}`} />
+                    <div>
+                      <h3 className="font-medium text-sm">Regional Massive Dispatch (AI)</h3>
+                      <p className={`text-[10px] ${highContrast ? 'text-yellow-400' : 'text-white/60'}`}>Real-time urgent task broadcasting</p>
+                    </div>
                   </div>
-                </div>
                   <div className={`p-6 grid grid-cols-1 md:grid-cols-2 gap-4 ${highContrast ? 'bg-black' : 'bg-white'}`}>
                     {aiApprovals.map(req => (
                       <div key={req.id} className={`p-4 rounded-xl shadow-sm border flex flex-col justify-between ${hcBg} hover:shadow-md transition-shadow`}>
@@ -511,8 +388,8 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                           </div>
                         ) : (
                           <div className={`p-2 rounded-lg text-center text-[9px] font-medium uppercase ${hcMuted}`}>
-                            {req.status === 'approved_nearby' ? 'Nearby Regions Signaled' : 
-                             req.status === 'approved_network' ? 'Entire Network Signaled' : 'Dispatch Refused'}
+                            {req.status === 'approved_nearby' ? 'Nearby Regions Signaled' :
+                              req.status === 'approved_network' ? 'Entire Network Signaled' : 'Dispatch Refused'}
                           </div>
                         )}
                       </div>
@@ -532,8 +409,8 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                     <div className="flex flex-wrap items-center gap-3">
                       <div className={`flex items-center px-3 py-2 rounded-md text-xs font-medium border shadow-sm flex-1 min-w-[200px] ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-200'}`}>
                         <Search className={`w-3.5 h-3.5 mr-2 ${hcText}`} />
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           placeholder="Search patient or ID..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
@@ -561,7 +438,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                         </select>
                       </div>
 
-                      <button 
+                      <button
                         onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
                         className={`flex items-center px-3 py-2 rounded-md text-xs font-medium border shadow-sm transition-colors ${highContrast ? 'bg-black border-yellow-400 hover:bg-gray-900 text-yellow-400' : 'bg-white border-gray-200 hover:bg-gray-50 text-[#2d0a4d]'}`}
                       >
@@ -605,7 +482,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                                 </div>
                               </td>
                               <td className="p-5">
-                                <button 
+                                <button
                                   onClick={() => openPatientSim(p)}
                                   className={`text-[11px] font-medium hover:underline ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`}
                                 >
@@ -631,18 +508,17 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                       <h3 className="text-xl font-medium flex items-center gap-3"><Activity className={`w-6 h-6 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> AI Intelligent Routing Engine</h3>
                       <p className={`text-xs mt-1 ${hcText}`}>Real-time workload balancing & cross-region optimization</p>
                     </div>
-                    <div className={`px-4 py-2 rounded-lg text-[10px] font-medium uppercase tracking-widest ${highContrast ? 'bg-gray-900 text-yellow-400 border border-yellow-400' : 'bg-purple-50 text-[#4c1d95]'}`}>Active Nodes: 14/15</div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {routingActions.map((item) => (
-                      <div key={item.id} className={`p-6 rounded-xl border-l-4 transition-all hover:scale-[1.02] ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100 hover:bg-white hover:shadow-md'}`}>
+                      <div key={item.id} className={`p-4 rounded-xl shadow-sm border flex flex-col justify-between ${hcBg} hover:shadow-md transition-shadow`}>
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-medium text-sm">{item.title}</h4>
                           <span className={`text-[9px] font-medium px-2 py-0.5 rounded uppercase tracking-tighter ${item.type === 'critical' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>{item.type}</span>
                         </div>
                         <p className={`text-xs leading-relaxed mb-4 ${hcText}`}>{item.desc}</p>
                         <div className="flex items-center justify-between pt-4 border-t border-gray-100/10">
-                          <span className="text-[10px] font-medium text-green-600 flex items-center gap-1"><TrendingDown className="w-3 h-3" /> {item.impact}</span>
+                          <span className="text-[10px] font-medium text-green-600 flex items-center gap-1">{item.impact}</span>
                           {item.status === 'pending' ? (
                             <button
                               onClick={() => executeRoutingMove(item.id)}
@@ -701,7 +577,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                 <div className={`p-4 flex items-center justify-between border-b ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f1f5f9] border-gray-200'}`}>
                   <div>
                     <h3 className={`font-medium text-sm flex items-center gap-2 ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>
-                      <MessageSquare className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> AI Manager Strategic Assistant
+                      <MessageSquare className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> AI Manager Assistant
                     </h3>
                     <p className={`text-[11px] mt-0.5 ${hcText}`}>Enterprise-wide decision support & workload balancing</p>
                   </div>
@@ -712,8 +588,8 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                     <div
                       key={i}
                       className={`p-4 rounded-xl shadow-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 border ${msg.role === 'ai'
-                          ? `rounded-tl-none ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f1f5f9] border-gray-200'}`
-                          : `rounded-tr-none ml-auto ${highContrast ? 'bg-yellow-400 text-black border-yellow-500' : darkMode ? 'bg-[#3b0764] text-white border-purple-700' : 'bg-[#4c1d95] text-white'}`
+                        ? `rounded-tl-none ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f1f5f9] border-gray-200'}`
+                        : `rounded-tr-none ml-auto ${highContrast ? 'bg-yellow-400 text-black border-yellow-500' : darkMode ? 'bg-[#3b0764] text-white border-purple-700' : 'bg-[#4c1d95] text-white'}`
                         }`}
                     >
                       {msg.text.split('\n\n').map((paragraph, idx) => (
@@ -728,7 +604,27 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                   <div ref={messagesEndRef} />
                 </div>
 
-                <div className={`p-4 ${highContrast ? 'bg-gray-900' : 'bg-[#f8fafc]'}`}>
+                <div className={`p-4 ${highContrast ? 'bg-gray-900' : 'bg-[#f8fafc]'} space-y-4`}>
+                  <div className="flex flex-wrap gap-2 px-2">
+                    {[
+                      'Reallocate PET-CT units',
+                      'Analyze Compliance Risks',
+                      'Review Hub Backlogs',
+                      'Optimize Surgical Flow'
+                    ].map(suggestion => (
+                      <button
+                        key={suggestion}
+                        onClick={() => handleSendMessage(suggestion)}
+                        className={`px-3 py-1.5 rounded-full border text-[10px] font-medium transition-all shadow-sm ${highContrast
+                            ? 'bg-black border-yellow-400 text-yellow-400 hover:bg-gray-900'
+                            : 'bg-white border-gray-100 text-[#4c1d95] hover:border-purple-200 hover:bg-purple-50'
+                          }`}
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -748,6 +644,104 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
           </div>
         </div>
 
+        {/* SIMPLIFIED MANAGER PATIENT FLOW VIEW */}
+        {showPatientSim && selectedPatient && (
+          <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 md:p-8">
+            <div className="absolute inset-0" onClick={() => setShowPatientSim(false)}></div>
+            <div className={`${highContrast ? 'bg-black border-2 border-yellow-400 text-white' : 'bg-white text-[#2d0a4d] shadow-2xl border border-gray-100'} relative w-full max-w-4xl rounded-3xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300`}>
+
+              {/* Header */}
+              <div className={`px-8 py-6 flex items-center justify-between border-b ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#2d0a4d] border-white/5'}`}>
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-medium text-lg ${highContrast ? 'bg-black border border-yellow-400 text-yellow-400' : 'bg-white/10 text-white'}`}>
+                    {selectedPatient.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-lg text-white">{selectedPatient.name} <span className="text-white/40 text-xs ml-2">ID: {selectedPatient.id}</span></h3>
+                    <p className="text-xs text-white/60">{selectedPatient.pathway} Pathway • {selectedPatient.status}</p>
+                  </div>
+                </div>
+                <button onClick={() => setShowPatientSim(false)} className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-8 grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-y-auto max-h-[70vh]">
+                {/* Left Column: Mandate & Risk */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 flex items-center gap-2 ${hcText}`}>
+                      <ShieldCheck className="w-3.5 h-3.5" /> Mandate Status
+                    </h4>
+                    <div className={`p-6 rounded-2xl border-2 ${selectedPatient.daysLeft <= 5 ? 'border-red-900/30 bg-red-100/40' : 'border-emerald-500/20 bg-emerald-50/50'}`}>
+                      <div className="flex justify-between items-end mb-4">
+                        <div>
+                          <p className={`text-3xl font-bold ${selectedPatient.daysLeft <= 5 ? 'text-red-950' : 'text-emerald-700'}`}>{selectedPatient.daysLeft} Days</p>
+                          <p className="text-[10px] font-medium uppercase text-gray-500">Remaining for Compliance</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-bold text-gray-900">Day {60 - selectedPatient.daysLeft}</p>
+                          <p className="text-[10px] font-medium uppercase text-gray-500">of 60-Day Window</p>
+                        </div>
+                      </div>
+                      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full transition-all duration-1000 ${selectedPatient.daysLeft <= 5 ? 'bg-red-800' : 'bg-emerald-600'}`}
+                          style={{ width: `${((60 - selectedPatient.daysLeft) / 60) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`p-6 rounded-2xl border ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#f8fafc] border-gray-100 shadow-sm'}`}>
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 flex items-center gap-2 text-[#4c1d95]">
+                      <Brain className="w-3.5 h-3.5" /> Strategic AI Insight
+                    </h4>
+                    <p className="text-xs leading-relaxed text-gray-600 italic">
+                      "{selectedPatient.aiInsight || "No specific operational risk detected. Monitoring network nodes."}"
+                    </p>
+                    <button className={`mt-6 w-full py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white hover:bg-[#3b0764] shadow-lg shadow-purple-900/10'}`}>
+                      Execute Resource Shift
+                    </button>
+                  </div>
+                </div>
+
+                {/* Right Column: Operational Flow */}
+                <div className="space-y-6">
+                  <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 flex items-center gap-2 ${hcText}`}>
+                    <Activity className="w-3.5 h-3.5" /> Operational Flow Log
+                  </h4>
+                  <div className="space-y-4">
+                    {[
+                      { milestone: 'Registration', status: 'Completed', date: 'Day 1', color: 'emerald' },
+                      { milestone: 'Primary Consult', status: 'Completed', date: 'Day 5', color: 'emerald' },
+                      { milestone: 'Diagnostic Imaging', status: 'Pending / At Risk', date: 'Day 12 (Today)', color: 'amber' },
+                      { milestone: 'Multidisciplinary Review', status: 'Scheduled', date: 'Day 15', color: 'gray' }
+                    ].map((step, i) => (
+                      <div key={i} className={`p-4 rounded-xl border flex items-center justify-between ${step.color === 'amber' ? 'bg-orange-50 border-orange-200 ring-1 ring-orange-200' : 'bg-white border-gray-100'}`}>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-2 h-2 rounded-full ${step.color === 'emerald' ? 'bg-emerald-500' : step.color === 'amber' ? 'bg-orange-500 animate-pulse' : 'bg-gray-300'}`}></div>
+                          <div>
+                            <p className="text-xs font-bold text-gray-900">{step.milestone}</p>
+                            <p className="text-[9px] text-gray-500">{step.status}</p>
+                          </div>
+                        </div>
+                        <span className="text-[9px] font-medium text-gray-400">{step.date}</span>
+                      </div>
+                    ))}
+                  </div>
+
+
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className={`p-6 border-t flex justify-end gap-3 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc]'}`}>
+                <button onClick={() => setShowPatientSim(false)} className="px-6 py-2 rounded-lg text-xs font-medium border border-gray-200 bg-white hover:bg-gray-50">Fechar</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

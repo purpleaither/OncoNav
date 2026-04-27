@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Bookmark, CheckCircle2, FileJson, Video, ClipboardCheck, X, Mic, Camera, MonitorUp, PhoneOff, User, UserCircle, ChevronLeft, Calendar, MapPin, CalendarPlus, ArrowRight, CalendarDays, AlertTriangle, Check, Filter, ArrowUpDown, Stethoscope, ShieldCheck, Activity, Clock, Brain, Sparkles, FileText, Users, MessageSquare, ChevronRight, Share2, Award, Thermometer, Database, Search, Plus, RefreshCw } from 'lucide-react';
 
 export default function ProfessionalView({ highContrast, darkMode, isAuthenticated, setIsAuthenticated }) {
@@ -7,6 +7,28 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
   const [showScheduleSim, setShowScheduleSim] = useState(false);
   const [showMsView, setShowMsView] = useState(false);
   const [aiChatView, setAiChatView] = useState(false);
+  const [simulatorMessages, setSimulatorMessages] = useState([]);
+
+  // Initialize and Reset simulator messages
+  useEffect(() => {
+    if (showScheduleSim) {
+      setSimulatorMessages([
+        {
+          role: 'ai',
+          type: 'network',
+          content: 'Current workload at Hub A is 88%, while Hub B (Biopsy Specialized) reports 42%. By routing this procedure to Hub B on April 03, we achieve a 25% increase in throughput efficiency.'
+        },
+        {
+          role: 'ai',
+          type: 'compliance',
+          content: 'This date ensures a 12-day margin before the legal breach threshold. Predictive models suggest 94% probability of successful post-op follow-up within the same window.'
+        }
+      ]);
+    } else {
+      setSimulatorMessages([]);
+      setAiChatView(false); // Also reset the view to calendar
+    }
+  }, [showScheduleSim]);
 
   const [aiSqueezeStatus, setAiSqueezeStatus] = useState('pending'); // pending, accepted, rejected
   const [calendarView, setCalendarView] = useState('week'); // day, week, month, year
@@ -65,6 +87,7 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
 
   const [dragError, setDragError] = useState(null);
   const [chatInput, setChatInput] = useState('');
+  const [simInput, setSimInput] = useState('');
   const [chatMessages, setChatMessages] = useState([
     {
       role: 'ai',
@@ -606,10 +629,10 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                     <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>Federated ID: {selectedPatient?.id}</span>
                   </div>
                   <div className="flex items-center gap-6 text-[11px] font-medium text-white/60">
-                    <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-blue-400" /> {selectedPatient?.age || 45}Y • {selectedPatient?.gender || 'F'}</span>
-                    <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-blue-400" /> {selectedPatient?.bloodType || 'O+'}</span>
-                    <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-blue-400" /> {selectedPatient?.region || 'Hub A'}</span>
-                    <span className={`px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-[9px] font-semibold uppercase tracking-widest border border-blue-500/20`}>{selectedPatient?.pathway}</span>
+                    <span className="flex items-center gap-1.5 text-white"><Calendar className="w-3.5 h-3.5" /> {selectedPatient?.age || 45}Y • {selectedPatient?.gender || 'F'}</span>
+                    <span className="flex items-center gap-1.5 text-white"><Activity className="w-3.5 h-3.5" /> {selectedPatient?.bloodType || 'O+'}</span>
+                    <span className="flex items-center gap-1.5 text-white"><MapPin className="w-3.5 h-3.5" /> {selectedPatient?.region || 'Hub A'}</span>
+                    <span className={`px-2.5 py-1 rounded-md bg-white/10 text-white text-[9px] font-semibold uppercase tracking-widest border border-white/20`}>{selectedPatient?.pathway}</span>
                   </div>
                 </div>
               </div>
@@ -621,40 +644,53 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
             <div className="flex-1 flex overflow-hidden">
               {/* LEFT SIDEBAR: AI CLINICAL COPILOT */}
               <div className={`w-[340px] border-r overflow-y-auto p-8 space-y-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`} />
-                  <h4 className={`text-[11px] font-medium uppercase tracking-widest ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>Clinical AI Intelligence</h4>
-                </div>
-
-                <div className="space-y-6">
-                  {(selectedPatient.aiInsights || [
-                    { title: 'Critical Risk Sync', icon: 'alert', content: 'Hemoglobin Drop (15%). HIE Federated Registry detected a drop to 10.2 g/dL in labs from City Hub B.', action: 'Request Pre-Op Support' },
-                    { title: 'Network Protocol Sync', icon: 'db', content: 'Contrast Allergy Alert. Patient reported Gadolinium reaction at Regional Hospital A (2023).', action: 'Update Imaging Order' }
-                  ]).map((insight, idx) => (
-                    <div key={idx} className={`p-6 rounded-2xl border transition-all hover:shadow-md ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 shadow-sm'}`}>
-                      <div className="flex items-center gap-2 mb-3">
-                        {insight.icon === 'alert' ? <AlertTriangle className={`w-4 h-4 ${darkMode ? 'text-orange-400' : 'text-purple-700'}`} /> : <Database className={`w-4 h-4 ${darkMode ? 'text-blue-400' : 'text-purple-700'}`} />}
-                        <span className={`text-[10px] font-medium uppercase tracking-tighter ${darkMode ? 'text-white' : 'text-gray-900'}`}>{insight.title}</span>
-                      </div>
-                      <p className={`text-xs leading-relaxed ${hcText}`}>
-                        {insight.content}
-                      </p>
-                      <button className={`mt-4 w-full py-2.5 text-white text-[10px] font-medium rounded-xl transition-colors shadow-lg ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#2d0a4d] hover:bg-[#3b0764] shadow-purple-100'}`}>
-                        {insight.action}
-                      </button>
+                <div className={`rounded-xl overflow-hidden border mb-6 ${highContrast ? 'border-yellow-400' : 'border-gray-100 shadow-sm bg-white'}`}>
+                  <div className={`p-4 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#2d0a4d] border-white/10'}`}>
+                    <div className="flex items-center justify-between">
+                      <h4 className={`text-[10px] font-medium uppercase tracking-widest ${highContrast ? 'text-yellow-400' : 'text-white'}`}>Clinical AI Intelligence</h4>
+                      <Sparkles className={`w-3.5 h-3.5 ${highContrast ? 'text-yellow-400' : 'text-white/70'}`} />
                     </div>
-                  ))}
+                  </div>
+                  <div className="p-6 space-y-6">
+                    {(selectedPatient.aiInsights || [
+                      { title: 'Critical Risk Sync', icon: 'alert', content: 'Hemoglobin Drop (15%). HIE Federated Registry detected a drop to 10.2 g/dL in labs from City Hub B.', action: 'Request Pre-Op Support' },
+                      { title: 'Network Protocol Sync', icon: 'db', content: 'Contrast Allergy Alert. Patient reported Gadolinium reaction at Regional Hospital A (2023).', action: 'Update Imaging Order' }
+                    ]).map((insight, idx) => (
+                      <div key={idx} className={`p-4 rounded-xl border transition-all hover:bg-gray-50 ${highContrast ? 'bg-black border-yellow-400' : 'bg-[#f8fafc] border-gray-100 shadow-sm'}`}>
+                        <div className="flex items-center gap-2 mb-3">
+                          {insight.icon === 'alert' ? <AlertTriangle className={`w-4 h-4 ${darkMode ? 'text-orange-400' : 'text-purple-700'}`} /> : <Database className={`w-4 h-4 ${darkMode ? 'text-blue-400' : 'text-purple-700'}`} />}
+                          <span className={`text-[10px] font-medium uppercase tracking-tighter ${darkMode ? 'text-white' : 'text-gray-900'}`}>{insight.title}</span>
+                        </div>
+                        <p className={`text-xs leading-relaxed ${hcText}`}>
+                          {insight.content}
+                        </p>
+                        <button className={`mt-4 w-full py-2.5 text-white text-[10px] font-medium rounded-xl transition-colors shadow-lg ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#2d0a4d] hover:bg-[#3b0764] shadow-purple-100'}`}>
+                          {insight.action}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* AI Mandate Projection */}
-                <div className={`p-6 rounded-2xl border ${highContrast ? 'bg-black border-2 border-yellow-400' : 'bg-[#2d0a4d] border-indigo-500/20 text-white shadow-2xl shadow-black'}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Brain className="w-4 h-4 text-purple-500" />
-                    <span className="text-[10px] font-medium uppercase tracking-widest text-[#2d0a4d]">Predictive Mandate</span>
+                <div className={`rounded-2xl overflow-hidden border ${highContrast ? 'bg-black border-2 border-yellow-400' : 'bg-white border-gray-100 shadow-sm'}`}>
+                  <div className={`p-4 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#2d0a4d] border-white/10'}`}>
+                    <div className="flex items-center justify-between">
+                      <h3 className={`font-medium text-[10px] uppercase tracking-widest ${highContrast ? 'text-yellow-400' : 'text-white'}`}>Predictive Mandate</h3>
+                      <Brain className="w-3.5 h-3.5 text-purple-400" />
+                    </div>
                   </div>
-                  <p className="text-xs leading-relaxed text-white">
-                    High probability (92%) of compliance if procedure is executed within {selectedPatient.daysLeft * 24} hours.
-                  </p>
+                  <div className="p-6">
+                    <div className={`p-4 rounded-xl border transition-all ${highContrast ? 'bg-black border-yellow-400' : 'bg-gray-50 border-gray-100'}`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <Activity className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-[10px] font-bold uppercase tracking-tighter text-[#2d0a4d]">Compliance Confidence</span>
+                      </div>
+                      <p className={`text-xs leading-relaxed ${hcText}`}>
+                        High probability (92%) of compliance if procedure is executed within {selectedPatient.daysLeft * 24} hours.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1055,8 +1091,7 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                                       e.dataTransfer.setData('id', app.id);
                                       e.dataTransfer.effectAllowed = 'move';
                                     }}
-                                    className={`p-3 rounded-xl shadow-sm border-l-4 cursor-move ${app.isOverbook ? 'shadow-md ring-1 ring-purple-100 animate-in fade-in zoom-in' : ''} ${getColorClasses(app.color, app.isOverbook)}`}
-                                  >
+                                    className={`p-3 rounded-xl shadow-sm border-l-4 cursor-move ${app.isOverbook ? 'shadow-md ring-1 ring-purple-100 animate-in fade-in zoom-in' : ''} ${getColorClasses(app.color, app.isOverbook)}`}>
                                     <span className={`text-[9px] font-medium block mb-0.5 ${getTextColor(app.color, app.isOverbook)}`}>{app.time} {app.isOverbook && 'AI SQUEEZE'}</span>
                                     <p className={`text-[10px] font-medium leading-tight truncate ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>{app.title}</p>
                                   </div>
@@ -1312,7 +1347,7 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
 
             {/* Top Navigation / Status Header (MATCHING PatientSim) */}
             <div
-              style={{ backgroundColor: '#020617' }}
+              style={{ backgroundColor: '#2d0a4d' }}
               className={`px-8 py-6 flex items-center justify-between border-b shrink-0 ${highContrast ? 'border-yellow-400' : 'border-white/5'}`}>
               <div className="flex items-center gap-6">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-medium text-xl transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-400' : 'bg-white/5 border border-white/10 text-white shadow-lg'}`}>
@@ -1324,10 +1359,10 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                     <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>Federated ID: {selectedPatient?.id}</span>
                   </div>
                   <div className="flex items-center gap-6 text-[11px] font-medium text-white/60">
-                    <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-blue-400" /> {selectedPatient?.age || 45}Y • {selectedPatient?.gender || 'F'}</span>
-                    <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-blue-400" /> {selectedPatient?.bloodType || 'O+'}</span>
-                    <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-blue-400" /> {selectedPatient?.region || 'Hub A'}</span>
-                    <span className={`px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-[9px] font-semibold uppercase tracking-widest border border-blue-500/20`}>{selectedPatient?.pathway}</span>
+                    <span className="flex items-center gap-1.5 text-white"><Calendar className="w-3.5 h-3.5" /> {selectedPatient?.age || 45}Y • {selectedPatient?.gender || 'F'}</span>
+                    <span className="flex items-center gap-1.5 text-white"><Activity className="w-3.5 h-3.5" /> {selectedPatient?.bloodType || 'O+'}</span>
+                    <span className="flex items-center gap-1.5 text-white"><MapPin className="w-3.5 h-3.5" /> {selectedPatient?.region || 'Hub A'}</span>
+                    <span className={`px-2.5 py-1 rounded-md bg-white/10 text-white text-[9px] font-semibold uppercase tracking-widest border border-white/20`}>{selectedPatient?.pathway}</span>
                   </div>
                 </div>
               </div>
@@ -1335,210 +1370,261 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
             </div>
 
             <div className="flex-1 flex overflow-hidden">
-              {/* LEFT SIDEBAR: AI SCHEDULING LOGIC (MATCHING PatientSim) */}
-              <div className={`w-[340px] border-r overflow-y-auto p-8 space-y-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : 'text-[#2d0a4d]'}`} />
-                  <div>
-                    <h4 className={`text-[11px] font-medium uppercase tracking-widest ${highContrast ? 'text-yellow-400' : 'text-[#2d0a4d]'}`}>Smart Schedule Suite</h4>
-                    <p className="text-[9px] text-[#2d0a4d]/70 font-medium uppercase tracking-tighter">AI Workload Optimization & Mandate Compliance</p>
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <div className={`p-6 rounded-2xl border transition-all hover:shadow-md ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100 shadow-sm'}`}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Activity className="w-4 h-4 text-purple-700" />
-                      <span className="text-[10px] font-medium text-gray-900 uppercase tracking-tighter">AI Recommendations</span>
+              {/* LEFT SIDEBAR: AI SCHEDULING INTELLIGENCE */}
+              <div className={`w-[360px] border-r overflow-y-auto p-8 space-y-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
+                <div className={`rounded-2xl overflow-hidden border ${highContrast ? 'border-yellow-400' : 'bg-white border-gray-100 shadow-sm'}`}>
+                  <div className={`p-4 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#2d0a4d] border-white/10'}`}>
+                    <div className="flex items-center justify-between">
+                      <h4 className={`text-[10px] font-bold uppercase tracking-widest ${highContrast ? 'text-yellow-400' : 'text-white'}`}>AI Strategic Recommendations</h4>
+                      <Sparkles className={`w-3.5 h-3.5 ${highContrast ? 'text-yellow-400' : 'text-white/70'}`} />
                     </div>
-                    <div className="space-y-3">
-                      <p className={`text-xs leading-relaxed ${hcText}`}>
-                        <strong className="block mb-1 font-medium">Target:</strong> {selectedPatient?.pathway === 'Thyroid Cancer' ? 'Biopsy Suite' : 'Specialist Consult'}
-                      </p>
-                      <p className={`text-xs leading-relaxed ${hcText}`}>
-                        <strong className="block mb-1 font-medium">Optimization Strategy:</strong> {selectedPatient?.daysLeft >= 12 ? 'Strategic Window (Month-View)' : 'AI Squeeze (Week-View)'}
+                  </div>
+                  <div className="p-6 space-y-6">
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <span className="block text-[8px] text-gray-500 font-bold uppercase mb-2">Optimal Window Identified</span>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-[#2d0a4d] flex items-center justify-center text-white font-bold text-sm">03</div>
+                          <div>
+                            <p className="text-[11px] font-bold text-[#2d0a4d]">Wednesday, April 03</p>
+                            <p className="text-[9px] text-gray-500 uppercase font-bold">09:00 AM • Biopsy Suite 01</p>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-gray-600 leading-relaxed">
+                        The AI has identified a capacity gap in the Biopsy Suite. Scheduling now ensures a <span className="font-bold text-[#2d0a4d]">12-day safety margin</span> relative to the federated mandate.
                       </p>
                     </div>
                     <button
                       onClick={() => setAiChatView(true)}
-                      className={`mt-4 w-full py-2.5 text-white text-[10px] font-medium rounded-xl transition-colors shadow-lg ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#2d0a4d] hover:bg-[#3b0764] shadow-purple-100'}`}>
-                      Verify Compliance Dates
+                      className={`w-full py-3 rounded-xl bg-[#2d0a4d] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-indigo-900 transition-all shadow-lg shadow-purple-100`}>
+                      Analyze Reasoning
                     </button>
                   </div>
                 </div>
 
-                {/* AI Mandate Projection (MATCHING PatientSim) */}
-                <div className={`p-6 rounded-2xl border ${highContrast ? 'bg-black border-2 border-yellow-400' : 'bg-[#2d0a4d] border-indigo-500/20 text-white shadow-2xl shadow-black'}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Brain className="w-4 h-4 text-purple-500" />
-                    <span className="text-[10px] font-medium uppercase tracking-widest text-[#2d0a4d]">Mandate Health</span>
-                  </div>
-                  <p className="text-xs leading-relaxed text-white">
-                    Current scheduling logic ensures {selectedPatient?.daysLeft} days of margin before breach.
-                  </p>
+                <div className="space-y-3">
+                  <button
+                    onClick={() => {
+                      setSimulatorMessages(prev => [...prev, { role: 'user', content: 'Authorize Appointment' }]);
+                      setAiChatView(true);
+                      setTimeout(() => {
+                        setSimulatorMessages(prev => [...prev, { role: 'ai', content: 'Confirmed. The appointment for April 03 has been processed and synced with the Regional HIE. Patient will be notified via portal.' }]);
+                      }, 800);
+                      setTimeout(() => {
+                        setAppointments(prev => [...prev, {
+                          id: 'smart_sched_' + Date.now(),
+                          title: (selectedPatient?.pathway === 'Thyroid Cancer' ? 'Biopsy' : 'Consult') + ' (AI)',
+                          day: 1,
+                          time: '11:00 AM',
+                          color: 'purple',
+                          isOverbook: true
+                        }]);
+                        setShowScheduleSim(false);
+                      }, 2500);
+                    }}
+                    className={`w-full py-5 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] shadow-xl transition-all active:scale-[0.98] ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-gradient-to-r from-[#2d0a4d] to-[#4c1d95] text-white hover:shadow-purple-200/50 hover:translate-y-[-2px]'}`}
+                  >
+                    Authorize Appointment
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSimulatorMessages(prev => [...prev, { role: 'user', content: 'Find alternative date' }]);
+                      setAiChatView(true);
+                      setTimeout(() => {
+                        setSimulatorMessages(prev => [...prev, { role: 'ai', content: 'Understood. I am re-analyzing available slots at Hubs C and D for next week. Please wait a moment...' }]);
+                      }, 800);
+                    }}
+                    className={`w-full py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-all ${highContrast ? 'bg-black border border-yellow-400 text-yellow-400' : 'bg-white border border-gray-200 text-[#2d0a4d] hover:bg-gray-50'}`}
+                  >
+                    Find alternative date
+                  </button>
                 </div>
-
-                <button
-                  onClick={() => {
-                    setAppointments(prev => [...prev, {
-                      id: 'smart_sched_' + Date.now(),
-                      title: (selectedPatient?.pathway === 'Thyroid Cancer' ? 'Biopsy' : 'Consult') + ' (AI)',
-                      day: 1,
-                      time: '11:00 AM',
-                      color: 'purple',
-                      isOverbook: true
-                    }]);
-                    setShowScheduleSim(false);
-                  }}
-                  className={`w-full py-5 rounded-2xl font-medium text-xs shadow-lg transition-all active:scale-[0.98] ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-blue-700 text-white hover:bg-blue-800 shadow-blue-200'}`}
-                >
-                  Confirm AI Scheduling
-                </button>
               </div>
 
-              {/* MAIN CONTENT AREA (MATCHING PatientSim) */}
+              {/* MAIN CONTENT AREA: TABBED INTERFACE */}
               <div className={`flex-1 flex flex-col ${highContrast ? 'bg-black' : 'bg-white'}`}>
-                <div className="flex-1 overflow-y-auto p-10">
+                <div className={`px-10 py-4 border-b flex items-center justify-between ${highContrast ? 'bg-gray-900' : 'bg-gray-50/50'}`}>
+                  <div className="flex gap-8">
+                    <button
+                      onClick={() => setAiChatView(false)}
+                      className={`text-[10px] font-bold uppercase tracking-widest pb-1 border-b-2 transition-all ${!aiChatView ? 'border-[#2d0a4d] text-[#2d0a4d]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}>
+                      Strategic Calendar
+                    </button>
+                    <button
+                      onClick={() => setAiChatView(true)}
+                      className={`text-[10px] font-bold uppercase tracking-widest pb-1 border-b-2 transition-all ${aiChatView ? 'border-[#2d0a4d] text-[#2d0a4d]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}>
+                      AI Clinical Assistant
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex-1 overflow-y-auto">
                   {aiChatView ? (
-                    <div className={`h-full flex flex-col rounded-3xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300 ${highContrast ? 'bg-gray-900 border-2 border-yellow-400' : 'bg-[#f8fafc] border border-gray-200'}`}>
-                      <div className={`p-6 border-b flex items-center justify-between ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100'}`}>
+                    <div className="p-10 max-w-4xl mx-auto space-y-10">
+                      <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                          <Sparkles className={`w-5 h-5 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} />
-                          <span className="font-medium text-sm uppercase tracking-widest">AI Clinical Scheduler Chat</span>
+                          <Sparkles className="w-5 h-5 text-[#2d0a4d]" />
+                          <h3 className="text-lg font-bold text-[#2d0a4d]">AI Clinical Assistant</h3>
                         </div>
-                        <button onClick={() => setAiChatView(false)} className={`text-[11px] font-medium ${hcText} hover:underline`}>Back to Agenda View</button>
+                        <p className="text-xs text-gray-500 leading-relaxed">
+                          The following dispatch logic has been generated based on real-time federated network capacity and mandate proximity for <strong>{selectedPatient?.name}</strong>.
+                        </p>
                       </div>
 
-                      <div className="flex-1 p-8 space-y-6 overflow-y-auto">
-                        {chatMessages.map((msg, i) => (
-                          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                            <div className={`max-w-[75%] p-6 rounded-3xl text-sm leading-relaxed shadow-sm ${msg.role === 'user'
-                              ? (highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white shadow-purple-900/10')
-                              : (highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-100' : 'bg-white border border-gray-100 text-[#334155] shadow-sm')
-                              }`}>
+                      <div className="space-y-6">
+                        {simulatorMessages.map((msg, idx) => (
+                          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <div className={`max-w-[85%] p-6 rounded-3xl ${msg.role === 'user' ? 'rounded-tr-none bg-[#2d0a4d] text-white' : 'rounded-tl-none bg-gray-50 border border-gray-100 text-xs leading-relaxed text-[#334155] shadow-sm'}`}>
+                              {msg.type === 'network' && <span className="block text-[8px] font-bold uppercase text-indigo-600 mb-2">Network Analysis</span>}
+                              {msg.type === 'compliance' && <span className="block text-[8px] font-bold uppercase text-emerald-600 mb-2">Compliance Assurance</span>}
                               {msg.content}
                             </div>
                           </div>
                         ))}
                       </div>
 
-                      <div className={`p-6 border-t ${highContrast ? 'bg-black border-yellow-400' : 'bg-white border-gray-100'}`}>
-                        <div className="flex gap-3">
-                          <input
-                            type="text"
-                            value={chatInput}
-                            onChange={e => setChatInput(e.target.value)}
-                            onKeyDown={e => e.key === 'Enter' && handleChatSend()}
-                            placeholder="Optimize schedule... e.g. 'Show me Tuesday morning'"
-                            className={`flex-1 px-6 py-4 rounded-2xl text-xs focus:outline-none ${highContrast ? 'bg-gray-900 border border-yellow-400 text-white' : 'bg-[#f8fafc] border border-gray-200 text-[#2d0a4d]'}`}
-                          />
+                      <div className="pt-10 border-t border-dashed border-gray-200 space-y-6">
+                        <div className="space-y-4">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Suggested Next Steps</p>
+                          <div className="flex flex-wrap gap-2">
+                            {[
+                              'Verify Hub B Equipment Status',
+                              'Ping Clinical Coordinator',
+                              'Review Mandate Buffer History',
+                              'Request Transportation Support'
+                            ].map(suggestion => (
+                              <button
+                                key={suggestion}
+                                onClick={() => {
+                                  setSimulatorMessages(prev => [...prev, { role: 'user', content: suggestion }]);
+                                  setTimeout(() => {
+                                    setSimulatorMessages(prev => [...prev, { role: 'ai', content: `Understood. Processing request for "${suggestion}" across the federated network. I will update the dashboard shortly.` }]);
+                                  }, 800);
+                                }}
+                                className="px-4 py-2 rounded-full border border-gray-100 bg-white text-[9px] font-bold text-[#2d0a4d] hover:border-indigo-200 hover:bg-indigo-50 transition-all shadow-sm"
+                              >
+                                {suggestion}
+                              </button>
+                            ))}
+                          </div>
+
+                          <div className="flex gap-3 pt-2">
+                            <input
+                              type="text"
+                              value={simInput}
+                              onChange={(e) => setSimInput(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' && simInput.trim()) {
+                                  const text = simInput;
+                                  setSimulatorMessages(prev => [...prev, { role: 'user', content: text }]);
+                                  setSimInput('');
+                                  setTimeout(() => {
+                                    setSimulatorMessages(prev => [...prev, { role: 'ai', content: `Processing your custom request: "${text}". I am analyzing the relevant federated data points now.` }]);
+                                  }, 1000);
+                                }
+                              }}
+                              placeholder="Ask the AI Clinical Assistant anything..."
+                              className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50/50 text-[11px] focus:outline-none focus:ring-2 focus:ring-indigo-100 transition-all"
+                            />
+                            <button
+                              onClick={() => {
+                                if (simInput.trim()) {
+                                  const text = simInput;
+                                  setSimulatorMessages(prev => [...prev, { role: 'user', content: text }]);
+                                  setSimInput('');
+                                  setTimeout(() => {
+                                    setSimulatorMessages(prev => [...prev, { role: 'ai', content: `Processing your custom request: "${text}". I am analyzing the relevant federated data points now.` }]);
+                                  }, 1000);
+                                }
+                              }}
+                              className="p-3 rounded-xl bg-[#2d0a4d] text-white hover:bg-indigo-900 transition-all shadow-lg"
+                            >
+                              <ArrowRight className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
                           <button
-                            onClick={handleChatSend}
-                            className={`px-8 py-4 rounded-2xl text-xs font-medium transition-all ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white hover:bg-purple-900'}`}
+                            onClick={() => {
+                              setSimulatorMessages(prev => [...prev, { role: 'user', content: 'Authorize Appointment' }]);
+                              setTimeout(() => {
+                                setSimulatorMessages(prev => [...prev, { role: 'ai', content: 'Confirmed. The appointment for April 03 has been processed and synced with the Regional HIE. Patient will be notified via portal.' }]);
+                              }, 800);
+                              setTimeout(() => {
+                                setAppointments(prev => [...prev, {
+                                  id: 'smart_sched_' + Date.now(),
+                                  title: (selectedPatient?.pathway === 'Thyroid Cancer' ? 'Biopsy' : 'Consult') + ' (AI)',
+                                  day: 1,
+                                  time: '11:00 AM',
+                                  color: 'purple',
+                                  isOverbook: true
+                                }]);
+                                setShowScheduleSim(false);
+                              }, 2500);
+                            }}
+                            className="w-full py-5 rounded-2xl bg-[#2d0a4d] text-white font-bold text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-900 transition-all"
                           >
-                            Send
+                            Authorize Appointment
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSimulatorMessages(prev => [...prev, { role: 'user', content: 'Find alternative date' }]);
+                              setTimeout(() => {
+                                setSimulatorMessages(prev => [...prev, { role: 'ai', content: 'Understood. I am re-analyzing available slots at Hubs C and D for next week. Please wait a moment...' }]);
+                              }, 800);
+                            }}
+                            className="w-full py-4 rounded-2xl bg-white border border-gray-200 text-[#2d0a4d] font-bold text-xs uppercase tracking-widest hover:bg-gray-50 transition-all"
+                          >
+                            Find alternative date
                           </button>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <>
-                      {selectedPatient?.daysLeft >= 12 ? (
-                        <>
-                          <h4 className="font-medium text-sm flex items-center gap-3 mb-4">
-                            <Calendar className={`w-5 h-5 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> Monthly Strategic View
-                          </h4>
-                          <div className="grid grid-cols-7 gap-1 h-[550px] overflow-y-auto">
-                            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-                              <div key={d} className={`text-center py-2 text-[10px] font-bold uppercase tracking-widest ${hcText}`}>{d}</div>
-                            ))}
-                            {Array.from({ length: 35 }).map((_, i) => {
-                              const dayNum = i + 1;
-                              const isSelected = i === (Math.abs(parseInt(selectedPatient?.id.replace('#', '') || '0')) % 25) + 5;
-                              // Fictitious workload: more dots means busier day
-                              const workload = (i * 7) % 5;
+                    <div className="h-full flex flex-col p-8">
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-bold text-[#2d0a4d]">April 2026</h2>
+                        <div className="flex gap-1">
+                          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => (
+                            <div key={d} className="w-10 h-10 flex items-center justify-center text-[10px] font-bold text-gray-300">{d}</div>
+                          ))}
+                        </div>
+                      </div>
 
-                              return (
-                                <div key={i} className={`aspect-square border rounded-lg p-2 flex flex-col items-center justify-between transition-all ${isSelected ? (highContrast ? 'bg-yellow-400 text-black border-white ring-2 ring-yellow-400' : 'bg-[#4c1d95] text-white border-purple-300 shadow-lg shadow-purple-200') : (highContrast ? 'border-yellow-400/20 bg-gray-900/10' : 'border-gray-50 bg-gray-50/30 text-gray-400')}`}>
-                                  <div className="w-full flex justify-between items-start">
-                                    <span className="text-[9px] opacity-60 font-mono">{dayNum.toString().padStart(2, '0')}</span>
-                                    {!isSelected && workload > 0 && (
-                                      <div className="flex gap-0.5">
-                                        {Array.from({ length: workload }).map((_, dotIdx) => (
-                                          <div key={dotIdx} className={`w-1 h-1 rounded-full ${dotIdx % 2 === 0 ? 'bg-purple-400/40' : 'bg-blue-400/40'}`}></div>
-                                        ))}
-                                      </div>
-                                    )}
+                      <div className="flex-1 grid grid-cols-7 border-t border-l border-gray-100 rounded-xl overflow-hidden shadow-2xl">
+                        {Array.from({ length: 35 }).map((_, i) => {
+                          const day = i + 1;
+                          const isSelected = i === 2; // April 03
+                          const hasApps = (i * 13) % 7 === 0;
+
+                          return (
+                            <div key={i} className={`relative border-r border-b min-h-[100px] p-3 transition-all ${isSelected ? 'bg-indigo-50/50' : 'bg-white hover:bg-gray-50/50'}`}>
+                              <span className={`text-[11px] font-bold ${isSelected ? 'text-[#2d0a4d]' : 'text-gray-400'}`}>{day.toString().padStart(2, '0')}</span>
+
+                              {isSelected && (
+                                <div className="mt-2 p-2 rounded-lg bg-[#2d0a4d] text-white shadow-lg animate-in fade-in zoom-in duration-500">
+                                  <div className="flex items-center gap-1.5 mb-1">
+                                    <Sparkles className="w-2.5 h-2.5" />
+                                    <span className="text-[8px] font-bold uppercase tracking-widest">AI Pick</span>
                                   </div>
-                                  {isSelected ? (
-                                    <div className="flex flex-col items-center pb-1">
-                                      <div className="text-[7px] font-bold uppercase tracking-tighter bg-white/20 px-1 rounded">AI Pick</div>
-                                      <Clock className="w-2.5 h-2.5 mt-1" />
-                                      <div className="text-[8px] mt-0.5 font-bold">09:00</div>
-                                    </div>
-                                  ) : (
-                                    <div className="w-full space-y-0.5 opacity-20">
-                                      {workload > 1 && <div className="h-0.5 w-full bg-gray-300 rounded-full"></div>}
-                                      {workload > 2 && <div className="h-0.5 w-3/4 bg-gray-300 rounded-full"></div>}
-                                    </div>
-                                  )}
+                                  <p className="text-[9px] font-bold leading-tight">{selectedPatient?.pathway === 'Thyroid Cancer' ? 'Biopsy' : 'Consult'}</p>
+                                  <p className="text-[7px] opacity-70 font-bold mt-0.5">09:00 AM</p>
                                 </div>
-                              );
-                            })}
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <h4 className="font-medium text-sm flex items-center gap-3 mb-4">
-                            <CalendarDays className={`w-5 h-5 ${highContrast ? 'text-yellow-400' : 'text-[#4c1d95]'}`} /> Professional Weekly Agenda
-                          </h4>
+                              )}
 
-                          <div className="grid grid-cols-5 gap-3 h-[550px]">
-                            {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day, dayIdx) => (
-                              <div key={day} className={`flex flex-col rounded-xl overflow-hidden border ${highContrast ? 'border-yellow-400/30' : 'border-gray-100 shadow-sm'}`}>
-                                <div className={`text-center py-3 text-xs font-medium uppercase tracking-tighter ${highContrast ? 'bg-gray-900 text-yellow-300' : 'bg-gray-50 text-gray-500'}`}>{day}</div>
-                                <div className="flex-1 p-2 space-y-2 overflow-y-auto">
-                                  {timeSlots.map(timeStr => {
-                                    const appsInSlot = appointments.filter(a => a.day === dayIdx && a.time === timeStr);
-                                    const dayIdxRec = Math.min(selectedPatient?.daysLeft || 1, 4);
-                                    const timeStrRec = (selectedPatient?.daysLeft || 1) <= 1 ? '11:00 AM' : (selectedPatient?.daysLeft || 1) <= 3 ? '09:30 AM' : '15:00 PM';
-                                    const isSuggested = dayIdx === dayIdxRec && timeStr === timeStrRec;
-
-                                    if (isSuggested) {
-                                      return (
-                                        <div key={timeStr} className={`p-3 rounded-lg text-[11px] font-medium ring-2 ${highContrast ? 'bg-yellow-400 text-black ring-white' : 'bg-[#4c1d95] text-white ring-purple-200 shadow-lg shadow-purple-200'}`}>
-                                          {timeStr.split(' ')[0]}
-                                          <div className={`mt-2 flex items-center gap-1.5 uppercase text-[8px] font-medium ${darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}><Activity className="w-3 h-3" /> AI Squeeze</div>
-                                        </div>
-                                      );
-                                    }
-
-                                    if (appsInSlot.length > 0) {
-                                      return (
-                                        <div key={timeStr} className="space-y-1">
-                                          {appsInSlot.map(app => (
-                                            <div key={app.id} className={`p-2 rounded-lg border-l-4 text-[10px] font-medium shadow-sm ${getColorClasses(app.color, app.isOverbook)}`}>
-                                              <span className={`block mb-0.5 ${getTextColor(app.color, app.isOverbook)}`}>{timeStr.split(' ')[0]} {app.isOverbook && 'AI SQUEEZE'}</span>
-                                              <div className={`text-[9px] font-medium leading-tight truncate ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>{app.title}</div>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      );
-                                    }
-
-                                    return (
-                                      <div key={timeStr} className={`p-3 rounded-lg text-[11px] font-medium border border-transparent ${highContrast ? 'text-yellow-400/20' : 'text-gray-300'}`}>
-                                        {timeStr.split(' ')[0]}
-                                      </div>
-                                    );
-                                  })}
+                              {!isSelected && hasApps && (
+                                <div className="mt-2 space-y-1">
+                                  <div className="h-1 w-full bg-gray-100 rounded-full"></div>
+                                  <div className="h-1 w-2/3 bg-gray-100 rounded-full"></div>
                                 </div>
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>

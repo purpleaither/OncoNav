@@ -73,22 +73,22 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
     { month: 'Mar', level: 2.1 },
   ];
 
-  const hcBg = highContrast 
-    ? 'bg-black text-white border-2 border-yellow-400' 
-    : darkMode 
-      ? 'bg-gray-900 border border-gray-800 text-gray-100' 
+  const hcBg = highContrast
+    ? 'bg-black text-white border-2 border-yellow-400'
+    : darkMode
+      ? 'bg-gray-900 border border-gray-800 text-gray-100'
       : 'bg-white border border-gray-200 text-[#2d0a4d]';
 
-  const hcText = highContrast 
-    ? 'text-yellow-300' 
-    : darkMode 
-      ? 'text-gray-100' 
+  const hcText = highContrast
+    ? 'text-yellow-300'
+    : darkMode
+      ? 'text-gray-100'
       : 'text-[#64748b]';
 
-  const hcMuted = highContrast 
-    ? 'bg-gray-800 border-2 border-yellow-400 text-white' 
-    : darkMode 
-      ? 'bg-gray-800 border border-gray-700 text-white' 
+  const hcMuted = highContrast
+    ? 'bg-gray-800 border-2 border-yellow-400 text-white'
+    : darkMode
+      ? 'bg-gray-800 border border-gray-700 text-white'
       : 'bg-[#f8fafc] border border-gray-200 text-[#334155]';
 
   if (!isAuthenticated) {
@@ -223,30 +223,30 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
               <div className="space-y-4">
                 <div>
                   <label className={`block text-[10px] font-medium uppercase mb-2 ${hcText}`}>Reminder Date</label>
-                  <input 
-                    type="date" 
+                  <input
+                    type="date"
                     defaultValue="2026-04-26"
-                    className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-[#4c1d95] ${highContrast ? 'bg-black border-yellow-400 text-white' : darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200'}`} 
+                    className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-[#4c1d95] ${highContrast ? 'bg-black border-yellow-400 text-white' : darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200'}`}
                   />
                 </div>
                 <div>
                   <label className={`block text-[10px] font-medium uppercase mb-2 ${hcText}`}>Reminder Time</label>
-                  <input 
-                    type="time" 
+                  <input
+                    type="time"
                     defaultValue={selectedMedForAlarm?.time.includes('AM') ? '08:00' : '20:00'}
-                    className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-[#4c1d95] ${highContrast ? 'bg-black border-yellow-400 text-white' : darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200'}`} 
+                    className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-[#4c1d95] ${highContrast ? 'bg-black border-yellow-400 text-white' : darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200'}`}
                   />
                 </div>
               </div>
 
               <div className="flex items-center gap-3 pt-2">
-                <button 
+                <button
                   onClick={() => setShowAlarmPopup(false)}
                   className={`flex-1 py-3 rounded-xl text-xs font-medium border ${highContrast ? 'border-yellow-400 text-yellow-400 hover:bg-gray-900' : darkMode ? 'border-gray-700 text-gray-400 hover:bg-gray-800' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     setMedsAlarm(prev => ({ ...prev, [selectedMedForAlarm.time]: true }));
                     setShowAlarmPopup(false);
@@ -266,8 +266,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
         <button
           onClick={() => setActiveTab('pathway')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'pathway'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95] bg-purple-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#4c1d95]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95] bg-purple-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#4c1d95]')
             }`}
         >
           <Activity className="w-4 h-4" />
@@ -276,8 +276,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
         <button
           onClick={() => setActiveTab('care')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'care'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95] bg-purple-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#4c1d95]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95] bg-purple-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#4c1d95]')
             }`}
         >
           <Heart className="w-4 h-4" />
@@ -286,8 +286,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
         <button
           onClick={() => setActiveTab('ai')}
           className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'ai'
-              ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95] bg-purple-50/50')
-              : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#4c1d95]')
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#4c1d95] text-[#4c1d95] bg-purple-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#4c1d95]')
             }`}
         >
           <MessageSquare className="w-4 h-4" />
@@ -306,8 +306,25 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
 
             <div className="relative w-32 h-32 mb-5">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke={highContrast ? 'transparent' : '#f1f5f9'} strokeWidth="8" />
-                <circle cx="50" cy="50" r="40" fill="none" stroke={highContrast ? '#facc15' : '#4c1d95'} strokeWidth="8" strokeDasharray="251.2" strokeDashoffset={251.2 * (1 - 42 / 60)} strokeLinecap="round" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={highContrast ? 'rgba(255,255,255,0.2)' : darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9'}
+                  strokeWidth="8"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={highContrast ? '#facc15' : darkMode ? '#a78bfa' : '#4c1d95'}
+                  strokeWidth="8"
+                  strokeDasharray="251.2"
+                  strokeDashoffset={251.2 * (1 - 42 / 60)}
+                  strokeLinecap="round"
+                />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className={`text-3xl font-medium ${highContrast ? 'text-yellow-400' : 'text-[#2d0a4d]'}`}>42</span>
@@ -357,8 +374,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
             <button
               onClick={() => setActiveTab('pathway')}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${activeTab === 'pathway'
-                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200'))
-                  : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
+                ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200'))
+                : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
                 }`}
             >
               Pathway
@@ -366,8 +383,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
             <button
               onClick={() => setActiveTab('history')}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${activeTab === 'history'
-                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200'))
-                  : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
+                ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200'))
+                : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
                 }`}
             >
               Records
@@ -375,8 +392,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
             <button
               onClick={() => setActiveTab('care')}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${activeTab === 'care'
-                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200'))
-                  : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
+                ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200'))
+                : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
                 }`}
             >
               Support
@@ -384,8 +401,8 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
             <button
               onClick={() => setActiveTab('ai')}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${activeTab === 'ai'
-                  ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#4c1d95] text-white shadow-sm border border-[#4c1d95]'))
-                  : (highContrast ? 'text-yellow-400 border border-yellow-400 hover:bg-gray-900' : 'text-[#4c1d95] hover:bg-gray-100')
+                ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#4c1d95] text-white shadow-sm border border-[#4c1d95]'))
+                : (highContrast ? 'text-yellow-400 border border-yellow-400 hover:bg-gray-900' : 'text-[#4c1d95] hover:bg-gray-100')
                 }`}
             >
               <MessageSquare className="w-3.5 h-3.5" /> AI Health Assistant
@@ -516,18 +533,16 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
                       { name: 'Tamoxifen 20mg', time: '08:00 AM', desc: '1 pill daily' },
                       { name: 'Vitamin D3 2000 UI', time: '20:00 PM', desc: '1 pill daily' }
                     ].map((med) => (
-                      <div 
+                      <div
                         key={med.time}
-                        className={`flex flex-col gap-3 p-4 rounded-xl transition-all border ${
-                          highContrast ? 'border-yellow-400 bg-black' : darkMode ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-white'
-                        }`}
+                        className={`flex flex-col gap-3 p-4 rounded-xl transition-all border ${highContrast ? 'border-yellow-400 bg-black' : darkMode ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-white'
+                          }`}
                       >
                         <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-full flex flex-col items-center justify-center shrink-0 ${
-                            medsTaken[med.time]
+                          <div className={`w-10 h-10 rounded-full flex flex-col items-center justify-center shrink-0 ${medsTaken[med.time]
                               ? (highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white')
                               : (highContrast ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-500')
-                          }`}>
+                            }`}>
                             <Clock className="w-3.5 h-3.5 mb-0.5" />
                             <span className="text-[7px] font-medium leading-none">{med.time.split(' ')[0]}</span>
                           </div>
@@ -537,29 +552,27 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
                           </div>
                           {medsTaken[med.time] && <CheckCircle2 className={`w-4 h-4 ${highContrast ? 'text-yellow-400' : darkMode ? 'text-emerald-400' : 'text-[#4c1d95]'}`} />}
                         </div>
-                        
+
                         <div className="flex items-center gap-2 mt-1">
-                          <button 
+                          <button
                             onClick={() => setMedsTaken(prev => ({ ...prev, [med.time]: !prev[med.time] }))}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${
-                              medsTaken[med.time]
+                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${medsTaken[med.time]
                                 ? (highContrast ? 'bg-yellow-400 text-black' : (darkMode ? 'bg-emerald-900/50 text-emerald-400 border border-emerald-500/30' : 'bg-green-100 text-black border border-green-200'))
                                 : (highContrast ? 'border border-yellow-400 text-yellow-400' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50')
-                            }`}
+                              }`}
                           >
                             <Check className="w-3 h-3" />
                             <span className={medsTaken[med.time] && !darkMode ? 'force-black font-medium' : ''}>{medsTaken[med.time] ? 'Already Taken' : 'Mark as Taken'}</span>
                           </button>
-                          <button 
+                          <button
                             onClick={() => {
                               setSelectedMedForAlarm(med);
                               setShowAlarmPopup(true);
                             }}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${
-                              medsAlarm[med.time]
+                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-medium transition-all ${medsAlarm[med.time]
                                 ? (highContrast ? 'bg-yellow-400 text-black' : (darkMode ? 'bg-purple-900/50 text-purple-400 border border-purple-500/30' : 'bg-purple-100 text-black force-black border border-purple-200'))
                                 : (highContrast ? 'border border-gray-700 text-gray-500' : 'bg-gray-50 border border-gray-200 text-gray-500 hover:bg-gray-100')
-                            }`}
+                              }`}
                           >
                             <Bell className="w-3 h-3" />
                             <span className={medsAlarm[med.time] && !darkMode ? 'force-black font-medium' : ''}>{medsAlarm[med.time] ? 'Alarm Active' : 'Set Alarm'}</span>
@@ -603,13 +616,12 @@ export default function PatientView({ highContrast, darkMode, isAuthenticated, s
               <div className={`flex-1 p-6 overflow-y-auto space-y-4 ${highContrast ? 'bg-black' : darkMode ? 'bg-[#2d0a4d]' : 'bg-white'}`}>
 
                 {messages.map((msg, i) => (
-                  <div 
-                    key={i} 
-                    className={`p-4 rounded-xl shadow-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 border ${
-                      msg.role === 'ai' 
-                        ? `rounded-tl-none ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f1f5f9] border-gray-200'}` 
+                  <div
+                    key={i}
+                    className={`p-4 rounded-xl shadow-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 border ${msg.role === 'ai'
+                        ? `rounded-tl-none ${highContrast ? 'bg-gray-900 border-yellow-400' : darkMode ? 'bg-gray-800 border-gray-700' : 'bg-[#f1f5f9] border-gray-200'}`
                         : `rounded-tr-none ml-auto ${highContrast ? 'bg-yellow-400 text-black border-yellow-500' : darkMode ? 'bg-[#3b0764] text-white border-purple-700' : 'bg-[#4c1d95] text-white'}`
-                    }`}
+                      }`}
                   >
                     {msg.text.split('\n\n').map((paragraph, idx) => (
                       <p key={idx} className={`text-xs leading-relaxed ${idx > 0 ? 'mt-2' : ''} ${msg.role === 'ai' ? (highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]') : 'font-medium'}`}>
