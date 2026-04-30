@@ -323,7 +323,7 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
     }
     result = [...result].sort((a, b) => sortOrder === 'asc' ? a.daysLeft - b.daysLeft : b.daysLeft - a.daysLeft);
     return result;
-  }, [filterPathway, filterRisk, searchQuery, sortOrder]);
+  }, [patientsListState, filterPathway, filterRisk, searchQuery, sortOrder]);
 
   const handleOpenPatientSim = (p) => {
     // Map ProfessionalView patient structure to Simulator structure
@@ -366,7 +366,8 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
 
           <button
             onClick={() => setIsAuthenticated(true)}
-            className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#7f1d1d] hover:bg-[#991b1b] text-white'}`}
+            data-active={highContrast ? "true" : undefined}
+            className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#7f1d1d] hover:bg-[#450a0a] text-white'}`}
           >
             <ShieldCheck className="w-4 h-4" />
             Clinical Login & Synchronize
@@ -617,18 +618,18 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
 
             {/* Top Navigation / Status Header */}
             <div
-              className={`px-8 py-6 flex items-center justify-between border-b shrink-0 ${highContrast ? 'bg-black border-yellow-400' : 'bg-[#2d0a4d] border-white/5'}`}>
-              <div className="flex items-center gap-6">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-medium text-xl transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-400' : 'bg-white/5 border border-white/10 text-white shadow-lg'}`}>
+              className={`px-4 lg:px-8 py-4 lg:py-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b shrink-0 ${highContrast ? 'bg-black border-yellow-400' : 'bg-[#2d0a4d] border-white/5'}`}>
+              <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-6 w-full lg:w-auto">
+                <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center font-medium text-lg lg:text-xl transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-400' : 'bg-white/5 border border-white/10 text-white shadow-lg'}`}>
                   {selectedPatient?.name?.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className={`font-medium text-xl tracking-tight text-white`}>{selectedPatient?.name}</h3>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/10 border-white/20 text-white'}`}>Patient 360º Clinical Intelligence</span>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>Federated ID: {selectedPatient?.id}</span>
+                  <div className="flex flex-wrap items-center gap-2 lg:gap-3 mb-1 lg:mb-2">
+                    <h3 className={`font-medium text-lg lg:text-xl tracking-tight text-white`}>{selectedPatient?.name}</h3>
+                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/10 border-white/20 text-white'}`}>Patient 360º</span>
+                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>ID: {selectedPatient?.id}</span>
                   </div>
-                  <div className="flex items-center gap-6 text-[11px] font-medium text-white/60">
+                  <div className="flex flex-wrap items-center gap-3 lg:gap-6 text-[10px] lg:text-[11px] font-medium text-white/60">
                     <span className="flex items-center gap-1.5 text-white"><Calendar className="w-3.5 h-3.5" /> {selectedPatient?.age || 45}Y • {selectedPatient?.gender || 'F'}</span>
                     <span className="flex items-center gap-1.5 text-white"><Activity className="w-3.5 h-3.5" /> {selectedPatient?.bloodType || 'O+'}</span>
                     <span className="flex items-center gap-1.5 text-white"><MapPin className="w-3.5 h-3.5" /> {selectedPatient?.region || 'Hub A'}</span>
@@ -636,14 +637,14 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <button onClick={() => setShowPatientSim(false)} className={`p-2.5 rounded-full transition-all ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-white/5 text-white hover:bg-white/10'}`}><X className="w-5 h-5" /></button>
+              <div className="absolute top-4 right-4 lg:relative lg:top-auto lg:right-auto">
+                <button onClick={() => setShowPatientSim(false)} className={`p-2 lg:p-2.5 rounded-full transition-all ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-white/5 text-white hover:bg-white/10'}`}><X className="w-4 h-4 lg:w-5 lg:h-5" /></button>
               </div>
             </div>
 
-            <div className="flex-1 flex overflow-hidden">
+            <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
               {/* LEFT SIDEBAR: AI CLINICAL COPILOT */}
-              <div className={`w-[340px] border-r overflow-y-auto p-8 space-y-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
+              <div className={`w-full lg:w-[340px] lg:border-r border-b lg:border-b-0 lg:overflow-y-auto p-4 lg:p-8 space-y-6 lg:space-y-8 shrink-0 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
                 <div className={`rounded-xl overflow-hidden border mb-6 ${highContrast ? 'border-yellow-400' : 'border-gray-100 shadow-sm bg-white'}`}>
                   <div className={`p-4 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#2d0a4d] border-white/10'}`}>
                     <div className="flex items-center justify-between">
@@ -698,7 +699,7 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
               <div className={`flex-1 flex flex-col ${highContrast ? 'bg-black' : 'bg-white'}`}>
                 {/* Tab Navigation */}
                 <div
-                  className={`flex border-b px-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
+                  className={`flex overflow-x-auto custom-scrollbar border-b px-4 lg:px-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
                   {[
                     { id: 'timeline', label: 'Clinical Timeline' },
                     { id: 'collaboration', label: 'Multidisciplinary Collaboration Portal' },
@@ -707,14 +708,14 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                     <button
                       key={t.id}
                       onClick={() => setPatientTab(t.id)}
-                      className={`px-8 py-5 text-xs font-medium uppercase tracking-widest border-b-4 transition-all ${patientTab === t.id ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-blue-500 text-black') : 'border-transparent text-black/40 hover:text-black'}`}
+                      className={`whitespace-nowrap px-4 lg:px-8 py-4 lg:py-5 text-[10px] lg:text-xs font-medium uppercase tracking-widest border-b-4 transition-all shrink-0 ${patientTab === t.id ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#2d0a4d] text-[#2d0a4d]') : 'border-transparent text-black/40 hover:text-black'}`}
                     >
                       {t.label}
                     </button>
                   ))}
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-10">
+                <div className="flex-1 lg:overflow-y-auto p-4 lg:p-10">
                   {patientTab === 'timeline' && (
                     <div className="space-y-10 max-w-4xl">
                       <div className="flex items-center justify-between mb-4">
@@ -944,29 +945,29 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
           </div>
           <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
             {pendingDispatches.map(dispatch => (
-              <div key={dispatch.id} className={`p-4 rounded-xl border flex flex-col items-stretch justify-between gap-4 transition-all group ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-white border-gray-100 hover:border-purple-100 hover:shadow-lg'}`}>
+              <div key={dispatch.id} className={`p-4 rounded-xl border flex flex-col items-stretch justify-between gap-4 transition-all group ${highContrast ? 'border-yellow-400 bg-gray-900' : darkMode ? 'bg-gray-800 border-gray-700 hover:border-purple-500' : 'bg-white border-gray-100 hover:border-purple-100 hover:shadow-lg'}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${dispatch.daysLeft <= 5 ? 'bg-[#fef2f2] text-[#7f1d1d] border-red-100' : 'bg-purple-50 text-purple-600 border-purple-100'} border group-hover:scale-105 shadow-inner`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${dispatch.daysLeft <= 5 ? (highContrast ? 'bg-black text-yellow-400 border-yellow-400' : darkMode ? 'bg-red-950/40 text-red-400 border-red-900' : 'bg-[#fef2f2] text-[#7f1d1d] border-red-100') : (highContrast ? 'bg-gray-900 text-white border-white' : darkMode ? 'bg-purple-900/30 text-purple-300 border-purple-800' : 'bg-purple-50 text-purple-600 border-purple-100')} border group-hover:scale-105 shadow-inner`}>
                       <UserCircle className="w-7 h-7" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`font-medium text-base ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>{dispatch.patient}</span>
-                        <span className={`text-[8px] px-2 py-0.5 rounded-md uppercase font-medium tracking-tighter ${dispatch.type === 'AI Squeeze' ? 'bg-[#4c1d95] text-white' :
-                          dispatch.type === 'Global Dispatch' ? 'bg-indigo-100 text-indigo-800 border border-indigo-200 shadow-sm' :
-                            'bg-[#064e3b] text-white border border-[#065f46] shadow-sm'
+                        <span className={`font-medium text-base ${highContrast || darkMode ? 'text-white' : 'text-[#2d0a4d]'}`}>{dispatch.patient}</span>
+                        <span className={`text-[8px] px-2 py-0.5 rounded-md uppercase font-medium tracking-tighter ${dispatch.type === 'AI Squeeze' ? (highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white') :
+                          dispatch.type === 'Global Dispatch' ? (highContrast ? 'bg-black text-white border border-white' : darkMode ? 'bg-indigo-900/50 text-indigo-300 border border-indigo-700 shadow-sm' : 'bg-indigo-100 text-indigo-800 border border-indigo-200 shadow-sm') :
+                            (highContrast ? 'bg-white text-black border border-white' : darkMode ? 'bg-[#064e3b] text-emerald-200 border border-[#065f46] shadow-sm' : 'bg-[#064e3b] text-white border border-[#065f46] shadow-sm')
                           }`}>
                           {dispatch.type}
                         </span>
                       </div>
-                      <p className={`text-[10px] mt-0.5 font-medium ${highContrast ? 'text-yellow-400/80' : 'text-gray-500'}`}>{dispatch.procedure} • {dispatch.region}</p>
+                      <p className={`text-[10px] mt-0.5 font-medium ${highContrast ? 'text-yellow-400/80' : darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{dispatch.procedure} • {dispatch.region}</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-end">
                     <div className="flex items-center gap-1.5">
-                      <Clock className={`w-3 h-3 ${dispatch.daysLeft <= 5 ? 'text-[#7f1d1d]' : 'text-[#4c1d95]'}`} />
-                      <span className={`text-[10px] font-medium uppercase tracking-widest ${dispatch.daysLeft <= 5 ? 'text-[#7f1d1d]' : 'text-[#4c1d95]'}`}>
+                      <Clock className={`w-3 h-3 ${dispatch.daysLeft <= 5 ? (highContrast ? 'text-yellow-400' : darkMode ? 'text-red-400' : 'text-[#7f1d1d]') : (highContrast || darkMode ? 'text-white' : 'text-[#4c1d95]')}`} />
+                      <span className={`text-[10px] font-medium uppercase tracking-widest ${dispatch.daysLeft <= 5 ? (highContrast ? 'text-yellow-400' : darkMode ? 'text-red-400' : 'text-[#7f1d1d]') : (highContrast || darkMode ? 'text-white' : 'text-[#4c1d95]')}`}>
                         {dispatch.daysLeft}d
                       </span>
                     </div>
@@ -976,13 +977,13 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleRejectDispatch(dispatch.id)}
-                    className={`flex-1 py-2 rounded-lg border border-gray-100 hover:bg-gray-50 hover:text-red-600 transition-all text-[10px] font-medium uppercase tracking-widest ${hcText}`}
+                    className={`flex-1 py-2 rounded-lg border transition-all text-[10px] font-medium uppercase tracking-widest ${highContrast ? 'border-gray-700 hover:bg-gray-800 text-white' : darkMode ? 'border-gray-600 hover:bg-gray-700 hover:text-red-400 text-gray-300' : 'border-gray-100 hover:bg-gray-50 hover:text-red-600 text-gray-600'}`}
                   >
                     Decline
                   </button>
                   <button
                     onClick={() => handleAcceptDispatch(dispatch.id)}
-                    className="flex-[2] py-2 bg-[#4c1d95] text-white text-[10px] font-medium uppercase tracking-widest rounded-lg hover:bg-[#3b0764] transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
+                    className={`flex-[2] py-2 text-[10px] font-medium uppercase tracking-widest rounded-lg transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#4c1d95] text-white hover:bg-[#3b0764]'}`}
                   >
                     <ClipboardCheck className="w-3.5 h-3.5" />
                     Accept in my agenda
@@ -1000,9 +1001,10 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
           { id: 'calendar', label: 'Clinical Agenda (Calendar)' },
           { id: 'pathways', label: 'My Patients' }
         ].map((tab) => (
-          <button
+        <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
+            aria-selected={activeTab === tab.id}
             className={`whitespace-nowrap px-5 py-2.5 rounded-md text-xs font-medium transition-all ${activeTab === tab.id
               ? (highContrast ? 'bg-yellow-400 text-black' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-[#f1f5f9] text-[#2d0a4d] shadow-sm border border-gray-200'))
               : (highContrast ? 'text-white hover:text-yellow-300' : 'text-[#64748b] hover:text-[#2d0a4d]')
@@ -1029,6 +1031,7 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                     <button
                       key={v}
                       onClick={() => setCalendarView(v.toLowerCase())}
+                      aria-selected={calendarView === v.toLowerCase()}
                       className={`text-[10px] px-3 py-1.5 rounded-md font-medium transition-colors ${calendarView === v.toLowerCase()
                         ? (highContrast ? 'bg-yellow-400 text-black' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : 'bg-white text-[#4c1d95] shadow-sm border border-gray-200'))
                         : (highContrast ? 'text-white hover:text-yellow-300' : 'text-[#64748b] hover:text-[#2d0a4d]')
@@ -1305,25 +1308,25 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                         </div>
                       </td>
                       <td className="p-5 text-right">
-                        <div className="flex items-center justify-end gap-4">
+                        <div className="flex flex-col lg:flex-row items-end lg:items-center justify-end gap-2 lg:gap-4">
                           <button
                             onClick={() => handleOpenPatientSim(p)}
-                            className={`text-[11px] font-normal uppercase tracking-widest px-4 py-1.5 rounded-full border flex items-center gap-2 transition-all shadow-sm hover:scale-105 active:scale-95 ${highContrast ? 'border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black' : 'border-[#4c1d95] text-[#4c1d95] hover:bg-purple-50'}`}
+                            className={`text-[11px] font-normal uppercase tracking-widest px-4 py-1.5 rounded-full border flex items-center justify-center gap-2 transition-all shadow-sm hover:scale-105 active:scale-95 whitespace-nowrap w-full lg:w-auto ${highContrast ? 'border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black' : 'border-[#4c1d95] text-[#4c1d95] hover:bg-purple-50'}`}
                           >
-                            <Search className="w-3 h-3" />
+                            <Search className="w-3 h-3 shrink-0" />
                             View Case
                           </button>
                           {p.daysLeft > 5 ? (
                             <button
                               onClick={() => handleOpenSchedule(p)}
-                              className={`text-[11px] font-normal uppercase tracking-widest px-4 py-1.5 rounded-full flex items-center gap-2 transition-all shadow-md hover:scale-105 active:scale-95 ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white hover:bg-[#3b0764]'}`}
+                              className={`text-[11px] font-normal uppercase tracking-widest px-4 py-1.5 rounded-full flex items-center justify-center gap-2 transition-all shadow-md hover:scale-105 active:scale-95 whitespace-nowrap w-full lg:w-auto ${highContrast ? 'bg-yellow-400 text-black' : 'bg-[#4c1d95] text-white hover:bg-[#3b0764]'}`}
                             >
-                              <Calendar className="w-3 h-3" />
+                              <Calendar className="w-3 h-3 shrink-0" />
                               Smart Schedule
                             </button>
                           ) : (
-                            <div className={`${highContrast ? 'text-red-500' : 'text-red-950 font-normal'}`}>
-                              <span className="text-[10px] uppercase tracking-widest">AI Squeeze</span>
+                            <div className={`${highContrast ? 'text-red-500' : 'text-red-950 font-normal'} w-full lg:w-auto text-right lg:text-center mt-1 lg:mt-0`}>
+                              <span className="text-[10px] uppercase tracking-widest whitespace-nowrap">AI Squeeze</span>
                             </div>
                           )}
                         </div>
@@ -1348,17 +1351,17 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
             {/* Top Navigation / Status Header (MATCHING PatientSim) */}
             <div
               style={{ backgroundColor: '#2d0a4d' }}
-              className={`px-8 py-6 flex items-center justify-between border-b shrink-0 ${highContrast ? 'border-yellow-400' : 'border-white/5'}`}>
-              <div className="flex items-center gap-6">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-medium text-xl transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-400' : 'bg-white/5 border border-white/10 text-white shadow-lg'}`}>
+              className={`px-4 lg:px-8 py-4 lg:py-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b shrink-0 ${highContrast ? 'border-yellow-400' : 'border-white/5'}`}>
+              <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-6 w-full lg:w-auto">
+                <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center font-medium text-lg lg:text-xl transition-all ${highContrast ? 'bg-black border-2 border-yellow-400 text-yellow-400' : 'bg-white/5 border border-white/10 text-white shadow-lg'}`}>
                   {selectedPatient?.name?.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className={`text-xl font-medium tracking-tight ${highContrast ? 'text-yellow-400' : 'text-white'}`}>{selectedPatient?.name}</h3>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>Federated ID: {selectedPatient?.id}</span>
+                  <div className="flex flex-wrap items-center gap-2 lg:gap-3 mb-1 lg:mb-2">
+                    <h3 className={`text-lg lg:text-xl font-medium tracking-tight ${highContrast ? 'text-yellow-400' : 'text-white'}`}>{selectedPatient?.name}</h3>
+                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-medium border uppercase tracking-widest ${highContrast ? 'border-yellow-400 text-yellow-400' : 'bg-white/5 border-white/10 text-white/50'}`}>ID: {selectedPatient?.id}</span>
                   </div>
-                  <div className="flex items-center gap-6 text-[11px] font-medium text-white/60">
+                  <div className="flex flex-wrap items-center gap-3 lg:gap-6 text-[10px] lg:text-[11px] font-medium text-white/60">
                     <span className="flex items-center gap-1.5 text-white"><Calendar className="w-3.5 h-3.5" /> {selectedPatient?.age || 45}Y • {selectedPatient?.gender || 'F'}</span>
                     <span className="flex items-center gap-1.5 text-white"><Activity className="w-3.5 h-3.5" /> {selectedPatient?.bloodType || 'O+'}</span>
                     <span className="flex items-center gap-1.5 text-white"><MapPin className="w-3.5 h-3.5" /> {selectedPatient?.region || 'Hub A'}</span>
@@ -1366,12 +1369,14 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
                   </div>
                 </div>
               </div>
-              <button onClick={() => setShowScheduleSim(false)} className={`hover:bg-white/10 p-2.5 rounded-2xl transition-all ${highContrast ? 'text-yellow-400' : 'text-white/40 hover:text-white'}`}><X className="w-6 h-6" /></button>
+              <div className="absolute top-4 right-4 lg:relative lg:top-auto lg:right-auto">
+                <button onClick={() => setShowScheduleSim(false)} className={`hover:bg-white/10 p-2 lg:p-2.5 rounded-2xl transition-all ${highContrast ? 'text-yellow-400' : 'text-white/40 hover:text-white'}`}><X className="w-4 h-4 lg:w-6 lg:h-6" /></button>
+              </div>
             </div>
 
-            <div className="flex-1 flex overflow-hidden">
+            <div className="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
               {/* LEFT SIDEBAR: AI SCHEDULING INTELLIGENCE */}
-              <div className={`w-[360px] border-r overflow-y-auto p-8 space-y-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
+              <div className={`w-full md:w-[360px] md:border-r border-b md:border-b-0 md:overflow-y-auto p-4 md:p-8 space-y-6 md:space-y-8 shrink-0 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
                 <div className={`rounded-2xl overflow-hidden border ${highContrast ? 'border-yellow-400' : 'bg-white border-gray-100 shadow-sm'}`}>
                   <div className={`p-4 border-b ${highContrast ? 'border-yellow-400 bg-gray-900' : 'bg-[#2d0a4d] border-white/10'}`}>
                     <div className="flex items-center justify-between">
@@ -1444,22 +1449,27 @@ export default function ProfessionalView({ highContrast, darkMode, isAuthenticat
 
               {/* MAIN CONTENT AREA: TABBED INTERFACE */}
               <div className={`flex-1 flex flex-col ${highContrast ? 'bg-black' : 'bg-white'}`}>
-                <div className={`px-10 py-4 border-b flex items-center justify-between ${highContrast ? 'bg-gray-900' : 'bg-gray-50/50'}`}>
-                  <div className="flex gap-8">
-                    <button
-                      onClick={() => setAiChatView(false)}
-                      className={`text-[10px] font-bold uppercase tracking-widest pb-1 border-b-2 transition-all ${!aiChatView ? 'border-[#2d0a4d] text-[#2d0a4d]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}>
-                      Strategic Calendar
-                    </button>
-                    <button
-                      onClick={() => setAiChatView(true)}
-                      className={`text-[10px] font-bold uppercase tracking-widest pb-1 border-b-2 transition-all ${aiChatView ? 'border-[#2d0a4d] text-[#2d0a4d]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}>
-                      AI Clinical Assistant
-                    </button>
-                  </div>
+                {/* Tab Navigation */}
+                <div
+                  className={`flex overflow-x-auto custom-scrollbar border-b px-4 md:px-8 ${highContrast ? 'bg-gray-900 border-yellow-400' : 'bg-[#f8fafc] border-gray-100'}`}>
+                  {[
+                    { id: 'calendar', label: 'Strategic Calendar' },
+                    { id: 'ai', label: 'AI Clinical Assistant' }
+                  ].map(t => {
+                    const isActive = (t.id === 'ai' && aiChatView) || (t.id === 'calendar' && !aiChatView);
+                    return (
+                      <button
+                        key={t.id}
+                        onClick={() => setAiChatView(t.id === 'ai')}
+                        className={`whitespace-nowrap px-4 md:px-8 py-4 md:py-5 text-[10px] md:text-xs font-medium uppercase tracking-widest border-b-4 transition-all shrink-0 ${isActive ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#2d0a4d] text-[#2d0a4d]') : 'border-transparent text-black/40 hover:text-black'}`}
+                      >
+                        {t.label}
+                      </button>
+                    )
+                  })}
                 </div>
 
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 lg:overflow-y-auto">
                   {aiChatView ? (
                     <div className="p-10 max-w-4xl mx-auto space-y-10">
                       <div className="space-y-4">

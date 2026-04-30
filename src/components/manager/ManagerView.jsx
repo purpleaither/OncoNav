@@ -68,7 +68,8 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
   // ROUTING ACTIONS STATE
   const [routingActions, setRoutingActions] = useState([
     { id: 1, title: 'Load Balancing: North Zone', desc: 'PET-CT capacity at 0%. AI suggests shifting 12 non-critical scans to South Zone Hub.', impact: 'Reduces wait by 4 days', type: 'high', status: 'pending' },
-    { id: 2, title: 'Strategic Load Balancing', desc: 'Surgery backlog identified. Suggest routing biopsy reviews to Dr. Miller (Rural Cluster).', impact: 'Prevents mandate breach for 5 patients', type: 'critical', status: 'pending' }
+    { id: 2, title: 'Strategic Load Balancing', desc: 'Surgery backlog identified. Suggest routing biopsy reviews to Dr. Miller (Rural Cluster).', impact: 'Prevents mandate breach for 5 patients', type: 'critical', status: 'pending' },
+    { id: 3, title: 'Network Duplicate Prevention', desc: 'AI flagged identical pathology exams requested by different physicians for patient A. S.', impact: 'Frees 1 secondary order slot', type: 'administrative', status: 'pending' }
   ]);
 
   // AI CHAT STATE
@@ -122,7 +123,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
 
   const [aiApprovals, setAiApprovals] = useState([
     { id: 'REQ-102', patient: 'N. R. (ID: #10293)', action: 'Expedite Core Needle Biopsy', reason: 'Critical Delay: 2 Days left on 60-Day Mandate', status: 'pending' },
-    { id: 'REQ-103', patient: 'A. S. (ID: #67890)', action: 'Block Secondary Order (Duplicates)', reason: 'Identical pathology exam requested by two different physicians', status: 'pending' },
+    { id: 'REQ-103', patient: 'A. S. (ID: #67890)', action: 'Emergency Surgery Slot Reallocation', reason: 'Surgical bottleneck: Only 5 days left on mandate. Shift to North Zone.', status: 'pending' },
     { id: 'REQ-104', patient: 'R. A. (ID: #77889)', action: 'Suggest Tele-Consultation', reason: 'Rural region patient. Avoids unnecessary ER travel', status: 'pending' }
   ]);
 
@@ -233,6 +234,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
 
           <button
             onClick={() => setIsAuthenticated(true)}
+            data-active={highContrast ? "true" : undefined}
             className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#4c1d95] hover:bg-[#3b0764] text-white'}`}
           >
             <ShieldCheck className="w-4 h-4" />
@@ -335,6 +337,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
+                aria-selected={activeTab === tab.id}
                 className={`flex-1 whitespace-nowrap px-5 py-2.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${activeTab === tab.id
                   ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#4c1d95] text-white shadow-sm border border-purple-400' : (tab.id === 'ai' ? 'bg-[#4c1d95] text-white shadow-sm' : 'bg-[#f5f3ff] text-[#4c1d95] shadow-sm border border-purple-200')))
                   : (highContrast ? (tab.id === 'ai' ? 'text-yellow-400 border border-yellow-400' : 'text-white hover:text-yellow-300') : (tab.id === 'ai' ? 'text-[#4c1d95] hover:bg-gray-100' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300'))
@@ -367,8 +370,9 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                             <span className={`text-[9px] font-mono ${hcText}`}>{req.id}</span>
                           </div>
                           <p className={`text-xs font-medium mb-2 ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}>{req.patient}</p>
-                          <div className={`p-2.5 rounded-lg mb-3 ${hcMuted}`}>
-                            <p className="text-[10px] font-medium text-[#2d0a4d] leading-tight"><span className={`${hcText} font-medium`}>Action:</span> {req.action}</p>
+                          <div className={`p-2.5 rounded-lg mb-3 flex flex-col gap-1.5 ${hcMuted}`}>
+                            <p className={`text-[10px] font-medium leading-tight ${highContrast ? 'text-white' : 'text-[#2d0a4d]'}`}><span className={`${hcText} font-medium`}>Action:</span> {req.action}</p>
+                            <p className={`text-[9px] leading-tight ${hcText}`}><span className="font-medium">Reason:</span> {req.reason}</p>
                           </div>
                         </div>
 
@@ -514,7 +518,7 @@ export default function ManagerView({ highContrast, darkMode, isAuthenticated, s
                       <div key={item.id} className={`p-4 rounded-xl shadow-sm border flex flex-col justify-between ${hcBg} hover:shadow-md transition-shadow`}>
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-medium text-sm">{item.title}</h4>
-                          <span className={`text-[9px] font-medium px-2 py-0.5 rounded uppercase tracking-tighter ${item.type === 'critical' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>{item.type}</span>
+                          <span className={`text-[9px] font-medium px-2 py-0.5 rounded uppercase tracking-tighter ${item.type === 'critical' ? 'bg-red-100 text-red-700' : item.type === 'administrative' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'}`}>{item.type}</span>
                         </div>
                         <p className={`text-xs leading-relaxed mb-4 ${hcText}`}>{item.desc}</p>
                         <div className="flex items-center justify-between pt-4 border-t border-gray-100/10">

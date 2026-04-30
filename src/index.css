@@ -213,9 +213,8 @@ body {
   color: #ffffff !important;
 }
 
-.dark-mode svg, 
-.dark-mode svg *, 
-.dark-mode .lucide {
+.dark-mode .lucide,
+.dark-mode .lucide * {
   color: #ffffff !important;
   stroke: #ffffff !important;
 }
@@ -286,17 +285,20 @@ body {
    ============================================ */
 
 .high-contrast,
-.high-contrast * {
+.high-contrast *:not(svg):not(path):not(circle):not(g):not(rect):not(line):not(polygon):not(polyline):not(.bg-transparent) {
   background-color: #000 !important;
   color: #facc15 !important;
   border-color: #facc15 !important;
   box-shadow: none !important;
   text-shadow: none !important;
 }
+.high-contrast .bg-transparent {
+  background-color: transparent !important;
+}
 
 /* Keep SVG icons yellow */
-.high-contrast svg,
-.high-contrast svg * {
+.high-contrast .lucide,
+.high-contrast .lucide * {
   color: #facc15 !important;
   stroke: #facc15 !important;
   fill: none !important;
@@ -317,10 +319,12 @@ body {
 }
 
 /* Active / selected button gets yellow bg + black text */
-.high-contrast button[data-active="true"],
-.high-contrast [aria-selected="true"] {
+.high-contrast.high-contrast button[data-active="true"],
+.high-contrast.high-contrast [aria-selected="true"],
+.high-contrast.high-contrast [aria-selected="true"] * {
   background-color: #facc15 !important;
   color: #000 !important;
+  stroke: #000 !important;
 }
 
 /* Links */

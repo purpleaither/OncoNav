@@ -107,7 +107,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
           <p className={`mb-8 text-xs ${hcText}`}>Support the patient's care pathway and monitor legal deadlines.</p>
           <button
             onClick={() => setIsAuthenticated(true)}
-            className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] hover:bg-[#be185d] text-white'}`}
+            data-active={highContrast ? "true" : undefined}
+            className={`w-full font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4 text-sm ${highContrast ? 'bg-yellow-400 text-black hover:bg-yellow-500' : 'bg-[#db2777] hover:bg-[#9d174d] text-white'}`}
           >
             <ShieldCheck className="w-4 h-4" />
             Authenticate as Caregiver
@@ -131,6 +132,16 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
         >
           <Activity className="w-4 h-4" />
           Pathway
+        </button>
+        <button
+          onClick={() => setActiveTab('history')}
+          className={`flex-1 py-3 px-1 text-[10px] font-medium transition-all border-b-2 flex flex-col items-center gap-1 ${activeTab === 'history'
+            ? (highContrast ? 'border-yellow-400 text-yellow-400' : 'border-[#db2777] text-[#db2777] bg-pink-50/50')
+            : (highContrast ? 'border-transparent text-gray-400' : 'border-transparent text-gray-500 hover:text-[#db2777]')
+            }`}
+        >
+          <FileText className="w-4 h-4" />
+          Records
         </button>
         <button
           onClick={() => setActiveTab('care')}
@@ -177,7 +188,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                   cy="50"
                   r="40"
                   fill="none"
-                  stroke={highContrast ? 'rgba(255,255,255,0.2)' : darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9'}
+                  stroke={highContrast ? '#000000' : darkMode ? '#4b5563' : '#f1f5f9'}
                   strokeWidth="8"
                 />
                 <circle
@@ -192,8 +203,8 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                   strokeLinecap="round"
                 />
               </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className={`text-3xl font-medium ${themeText}`}>42</span>
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-transparent">
+                <span className={`text-3xl font-medium ${highContrast ? 'text-yellow-400' : darkMode ? 'text-white' : 'text-[#db2777]'}`}>42</span>
                 <span className={`text-[9px] font-medium uppercase mt-1 ${hcText}`}>Days Left</span>
               </div>
             </div>
@@ -217,7 +228,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                 const day = i + 1;
                 const isHighlight = day === 15;
                 return (
-                  <div key={i} className={`p-1.5 rounded-md ${isHighlight ? (highContrast ? 'bg-yellow-400 text-black font-medium shadow-md' : 'bg-[#db2777] text-white font-medium shadow-md') : (highContrast ? 'hover:bg-gray-800' : 'hover:bg-gray-100')}`}>
+                  <div key={i} aria-selected={isHighlight} className={`p-1.5 rounded-md ${isHighlight ? (highContrast ? 'bg-yellow-400 text-black font-medium shadow-md' : 'bg-[#db2777] text-white font-medium shadow-md') : (highContrast ? 'hover:bg-gray-800' : 'hover:bg-gray-100')}`}>
                     {day}
                   </div>
                 );
@@ -240,6 +251,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
+                aria-selected={activeTab === tab.id}
                 className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all ${activeTab === tab.id
                     ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#fdf2f8] text-[#db2777] shadow-sm border border-pink-200'))
                     : (highContrast ? 'text-white hover:text-yellow-300' : 'text-gray-500 hover:text-[#2d0a4d] dark:text-gray-300')
@@ -250,6 +262,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
             ))}
             <button
               onClick={() => setActiveTab('ai')}
+              aria-selected={activeTab === 'ai'}
               className={`flex-1 py-2 px-4 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${activeTab === 'ai'
                 ? (highContrast ? 'bg-yellow-400 text-black shadow-sm' : (darkMode ? 'bg-[#db2777] text-white shadow-sm border border-pink-400' : 'bg-[#db2777] text-white shadow-sm border border-[#db2777]'))
                 : (highContrast ? 'text-yellow-400 border border-yellow-400 hover:bg-gray-900' : 'text-[#db2777] hover:bg-gray-100')
@@ -406,7 +419,7 @@ export default function CaregiverView({ highContrast, darkMode, isAuthenticated,
                         <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: highContrast ? '#facc15' : darkMode ? '#e2e8f0' : '#64748b' }} />
                         <Tooltip contentStyle={highContrast ? { backgroundColor: '#000', color: '#fff', border: '1px solid #facc15' } : darkMode ? { backgroundColor: '#1f2937', color: '#fff', border: '1px solid #4b5563' } : { borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '11px' }} />
                         <Line type="monotone" dataKey="leukocytes" name="Leukocytes" stroke={highContrast ? '#facc15' : darkMode ? '#fb7185' : '#db2777'} strokeWidth={2} dot={{ r: 3 }} />
-                        <Line type="monotone" dataKey="hemoglobin" name="Hemoglobin" stroke={highContrast ? '#fff' : darkMode ? '#ffffff' : '#be185d'} strokeWidth={2} dot={{ r: 3 }} />
+                        <Line type="monotone" dataKey="hemoglobin" name="Hemoglobin" stroke={highContrast ? '#facc15' : darkMode ? '#ffffff' : '#be185d'} strokeDasharray={highContrast ? "5 5" : ""} strokeWidth={2} dot={{ r: 3 }} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>

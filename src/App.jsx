@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, UserCircle, Activity, Stethoscope, Bell, Type, Moon, Sun, ChevronLeft, Database, FileText, Clock, ShieldCheck, CalendarClock, Video, Repeat, TrendingDown, TrendingUp, Home, Heart, ChevronRight, ChevronDown, Contrast } from 'lucide-react';
+import { LayoutDashboard, UserCircle, Activity, Stethoscope, Bell, Type, Moon, Sun, ChevronLeft, Database, FileText, Clock, ShieldCheck, CalendarClock, Video, Repeat, TrendingDown, TrendingUp, Home, Heart, ChevronRight, ChevronDown, Contrast, Volume2 } from 'lucide-react';
 import PatientView from './components/patient/PatientView';
 import ManagerView from './components/manager/ManagerView';
 import ProfessionalView from './components/professional/ProfessionalView';
@@ -15,7 +15,8 @@ function App() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+  const [audioEnabled, setAudioEnabled] = useState(false);
+
   const getContextualNotifications = () => {
     switch (persona) {
       case 'patient': return [
@@ -69,7 +70,7 @@ function App() {
 
   if (!persona) {
     return (
-      <div 
+      <div
         style={{ zoom: fontSize === 'large' ? 1.15 : 1 }}
         className={`min-h-screen flex flex-col p-6 transition-all duration-500 relative overflow-y-auto
         ${highContrast ? 'high-contrast' : darkMode ? 'dark-mode' : 'bg-[#f1f5f9] text-[#1e293b]'}`}>
@@ -86,6 +87,7 @@ function App() {
         )}
 
         <div className="absolute top-6 right-6 flex items-center gap-2 z-50 fixed">
+
           <button
             onClick={toggleFontSize}
             title={fontSize === 'large' ? 'Diminuir fonte' : 'Aumentar fonte'}
@@ -99,7 +101,7 @@ function App() {
           <button
             onClick={() => setDarkMode(!darkMode)}
             title={darkMode ? 'Modo claro' : 'Modo escuro'}
-            className={`p-2.5 rounded-lg transition-colors border shadow-sm ${darkMode 
+            className={`p-2.5 rounded-lg transition-colors border shadow-sm ${darkMode
               ? (highContrast ? 'bg-yellow-400 text-black border-yellow-500' : 'bg-gray-800 text-yellow-400 border-gray-700 hover:bg-gray-700')
               : (highContrast ? 'bg-gray-900 text-yellow-400 border-gray-700 hover:bg-gray-800' : 'bg-white text-[#475569] border-gray-300 hover:bg-gray-100')
               }`}
@@ -109,8 +111,8 @@ function App() {
           <button
             onClick={() => setHighContrast(!highContrast)}
             title={highContrast ? 'Modo normal' : 'Alto contraste'}
-            className={`p-2.5 rounded-lg transition-colors border shadow-sm ${highContrast 
-              ? 'bg-yellow-400 text-black border-yellow-500' 
+            className={`p-2.5 rounded-lg transition-colors border shadow-sm ${highContrast
+              ? 'bg-yellow-400 text-black border-yellow-500'
               : darkMode ? 'bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700' : 'bg-white text-[#475569] border-gray-300 hover:bg-gray-100'
               }`}
           >
@@ -197,18 +199,18 @@ function App() {
 
   const getPersonaDetails = () => {
     switch (persona) {
-      case 'patient': return { title: 'Patient Portal', icon: UserCircle, color: 'text-[#5b21b6]' };
-      case 'caregiver': return { title: 'Caregiver Portal', icon: Heart, color: 'text-[#db2777]' };
-      case 'manager': return { title: 'Manager Portal', icon: LayoutDashboard, color: 'text-[#4c1d95]' };
-      case 'professional': return { title: 'Professional Portal', icon: Stethoscope, color: 'text-[#7f1d1d]' };
-      default: return { title: '', icon: Activity, color: '' };
+      case 'patient': return { title: 'Patient Portal', icon: UserCircle, color: 'text-[#4c1d95]', bg: 'bg-purple-50' };
+      case 'caregiver': return { title: 'Caregiver Portal', icon: Heart, color: 'text-[#db2777]', bg: 'bg-pink-50' };
+      case 'manager': return { title: 'Manager Portal', icon: LayoutDashboard, color: 'text-[#4c1d95]', bg: 'bg-indigo-50' };
+      case 'professional': return { title: 'Professional Portal', icon: Stethoscope, color: 'text-[#7f1d1d]', bg: 'bg-red-50' };
+      default: return { title: '', icon: Activity, color: '', bg: '' };
     }
   };
 
-  const { title: PersonaTitle, icon: PersonaIcon, color: PersonaColor } = getPersonaDetails();
+  const { title: PersonaTitle, icon: PersonaIcon, color: PersonaColor, bg: PersonaBg } = getPersonaDetails();
 
   return (
-    <div 
+    <div
       style={{ zoom: fontSize === 'large' ? 1.15 : 1 }}
       className={`min-h-screen flex flex-col font-sans relative transition-all duration-300
       ${highContrast ? 'high-contrast' : darkMode ? 'dark-mode' : 'bg-[#f1f5f9] text-[#2d0a4d]'}`}>
@@ -235,7 +237,7 @@ function App() {
 
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 border-r border-gray-200 pr-4">
-            <button onClick={toggleFontSize} title="Font Size" className={`p-2 rounded hover:bg-gray-100 ${fontSize === 'large' ? 'text-[#4c1d95] bg-purple-50' : 'text-[#475569]'}`}>
+            <button onClick={toggleFontSize} title="Font Size" className={`p-2 rounded hover:bg-gray-100 ${fontSize === 'large' ? (highContrast ? 'text-yellow-400 bg-black' : darkMode ? `${PersonaColor} bg-gray-800` : `${PersonaColor} ${PersonaBg}`) : (highContrast ? 'text-[#475569]' : PersonaColor)}`}>
               <Type className="w-4 h-4" />
             </button>
             <button onClick={() => setDarkMode(!darkMode)} title="Toggle Theme" className={`p-2 rounded hover:bg-gray-100 ${darkMode ? 'text-yellow-400 bg-gray-800' : 'text-[#475569]'}`}>
@@ -247,7 +249,7 @@ function App() {
           </div>
           {persona && isAuthenticated && (
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setShowNotifications(!showNotifications)}
                 className={`w-8 h-8 rounded-full flex items-center justify-center border text-[#475569] hover:bg-gray-50 ${highContrast ? 'border-gray-700' : 'border-gray-200 bg-white'}`}
               >
